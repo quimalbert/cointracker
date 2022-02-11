@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1098486512732",
+    "project_id": "cointracker-6ede8",
+    "storage_bucket": "cointracker-6ede8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1098486512732:android:854bbccebc2a01a414fa99",
+        "android_client_info": {
+          "package_name": "com.starpdo.cointracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1098486512732-7cm85j6ulqmk09nvokogft7dpnsnu1oh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfjZkG0gArqMuHFTpFP-3_y0pHrWux-z8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1098486512732-7cm85j6ulqmk09nvokogft7dpnsnu1oh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
