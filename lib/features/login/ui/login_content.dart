@@ -1,3 +1,4 @@
+import 'package:cointracker/features/home/ui/home_page.dart';
 import 'package:cointracker/features/login/application/check_credentials.dart';
 import 'package:cointracker/features/login/ui/widgets/login_textfield.dart';
 import 'package:cointracker/shared/ui/widgets/scaffold_snackbar.dart';
@@ -61,6 +62,22 @@ class _LoginContentState extends State<LoginContent> {
                   isError: true,
                 );
             },
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 10, right: 100, left: 100),
+          child: TextButton(
+            child: const Text(
+              "Forgotten password?",
+              style: TextStyle(
+                  color: Colors.white,
+                  decoration: TextDecoration.underline,
+                  fontSize: 16),
+            ),
+            //Temporal mientras se programa funcinalidad
+            //Borrar cuando se haga el Forgot Password
+            onPressed: () =>
+                (Navigator.pushReplacementNamed(context, HomePage.routeID)),
           ),
         ),
       ],

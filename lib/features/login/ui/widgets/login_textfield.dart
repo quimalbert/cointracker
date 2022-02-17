@@ -19,10 +19,10 @@ class LoginTextField extends StatelessWidget {
         style: const TextStyle(color: Colors.white),
         decoration: InputDecoration(
           focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.greenAccent, width: 5.0),
+            borderSide: BorderSide(color: Colors.greenAccent, width: 1.0),
           ),
           enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.red, width: 5.0),
+            borderSide: BorderSide(color: Colors.red, width: 1.0),
           ),
           hintText: hintText,
           hintStyle: const TextStyle(color: Colors.white),
