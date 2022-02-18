@@ -1,6 +1,9 @@
 import 'dart:ui';
 
+import 'package:cointracker/features/login/ui/login_page.dart';
+import 'package:cointracker/features/profile/ui/widgets/profile_avatar_button.dart';
 import 'package:cointracker/features/profile/ui/widgets/profile_card.dart';
+import 'package:cointracker/shared/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class ProfileContent extends StatefulWidget {
@@ -17,11 +20,42 @@ class _ProfileContentState extends State<ProfileContent> {
   Widget build(BuildContext context) {
     return ListView(
       children: [
+        BottomSheet(
+          onClosing: () {},
+          builder: (context) => Container(),
+        ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(
             onTap: () {
-              print("hola");
+              showModalBottomSheet(
+                  elevation: defaultElevation,
+                  backgroundColor: Colors.white,
+                  context: context,
+                  builder: (context) => Container(
+                      height: 290,
+                      child: ListView(
+                        children: [
+                          AvatarButton(
+                            buttonText: "Select from Gallery",
+                            buttonIcon: Icon(
+                              Icons.photo,
+                              color: Colors.white,
+                              size: 50.0,
+                            ),
+                            onPressed: () {},
+                          ),
+                          AvatarButton(
+                            buttonText: "Take a beautiful Photo",
+                            buttonIcon: Icon(
+                              Icons.camera_alt,
+                              color: Colors.white,
+                              size: 50.0,
+                            ),
+                            onPressed: () {},
+                          ),
+                        ],
+                      )));
             }, // Image tapped
             child: const Center(
               child: CircleAvatar(
@@ -58,6 +92,7 @@ class _ProfileContentState extends State<ProfileContent> {
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(
             onTap: () {
+              Navigator.pushReplacementNamed(context, LoginPage.routeID);
               print("Logout");
             },
             child: Text(
