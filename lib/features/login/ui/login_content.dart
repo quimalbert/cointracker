@@ -49,7 +49,6 @@ class _LoginContentState extends State<LoginContent> {
                 );
                 return;
               }
-
               _isLoginCorrect = await _checkCredentialsUsecase(
                   email: _email!, password: _password!);
 

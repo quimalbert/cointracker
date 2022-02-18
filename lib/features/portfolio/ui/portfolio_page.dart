@@ -7,7 +7,7 @@ import 'portfolio_content.dart';
 class PortfolioPage extends StatelessWidget {
   static const String routeID = '/portfolio';
 
-  //const LoginPage({Key? key}) : super(key: key);
+  const PortfolioPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

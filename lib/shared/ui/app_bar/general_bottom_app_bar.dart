@@ -14,33 +14,40 @@ class GeneralBottomAppBar extends StatelessWidget {
     return BottomAppBar(
       color: backgroundColor,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           MenuIcon(
             iconData: Icons.home,
             tooltip: 'Home',
             onPressed: () {
-              Navigator.pushReplacementNamed(context, HomePage.routeID);
+              if (ModalRoute.of(context)!.settings.name != HomePage.routeID)
+                Navigator.pushReplacementNamed(context, HomePage.routeID);
             },
           ),
           MenuIcon(
               iconData: Icons.bar_chart,
               tooltip: 'Coin List',
               onPressed: () {
-                Navigator.pushReplacementNamed(context, CoinListPage.routeID);
+                if (ModalRoute.of(context)!.settings.name !=
+                    CoinListPage.routeID)
+                  Navigator.pushReplacementNamed(context, CoinListPage.routeID);
               }),
           MenuIcon(
               iconData: Icons.pie_chart_sharp,
               tooltip: 'Portfolio',
               onPressed: () {
-                Navigator.pushReplacementNamed(context, PortfolioPage.routeID);
+                if (ModalRoute.of(context)!.settings.name !=
+                    PortfolioPage.routeID)
+                  Navigator.pushReplacementNamed(
+                      context, PortfolioPage.routeID);
               }),
           MenuIcon(
             iconData: Icons.person,
             tooltip: 'Profile',
             onPressed: () {
-              Navigator.pushReplacementNamed(context, ProfilePage.routeID);
+              if (ModalRoute.of(context)!.settings.name != ProfilePage.routeID)
+                Navigator.pushReplacementNamed(context, ProfilePage.routeID);
             },
           ),
         ],

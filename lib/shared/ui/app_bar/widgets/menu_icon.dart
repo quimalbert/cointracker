@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class MenuIcon extends StatelessWidget {
   final IconData iconData;
-  final Function onPressed;
+  final onPressed;
   final String tooltip;
 
   const MenuIcon({
@@ -20,7 +20,7 @@ class MenuIcon extends StatelessWidget {
       iconSize: 50,
       color: Colors.white,
       icon: Icon(iconData),
-      onPressed: () => onPressed,
+      onPressed: onPressed,
     );
   }
 }

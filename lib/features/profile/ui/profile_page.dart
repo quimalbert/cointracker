@@ -7,7 +7,7 @@ import 'profile_content.dart';
 class ProfilePage extends StatelessWidget {
   static const String routeID = '/profile';
 
-  //const LoginPage({Key? key}) : super(key: key);
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

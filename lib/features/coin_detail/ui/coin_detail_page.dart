@@ -7,7 +7,7 @@ import 'coin_detail_content.dart';
 class CoinDetailPage extends StatelessWidget {
   static const String routeID = '/coindetail';
 
-  //const LoginPage({Key? key}) : super(key: key);
+  const CoinDetailPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

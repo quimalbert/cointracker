@@ -7,7 +7,7 @@ import 'coin_list_content.dart';
 class CoinListPage extends StatelessWidget {
   static const String routeID = '/coinlist';
 
-  //const LoginPage({Key? key}) : super(key: key);
+  const CoinListPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
