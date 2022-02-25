@@ -1,8 +1,10 @@
 import 'dart:ui';
 
 import 'package:cointracker/features/login/ui/login_page.dart';
+import 'package:cointracker/features/profile/application/select_photo.dart';
 import 'package:cointracker/features/profile/ui/widgets/profile_avatar_button.dart';
 import 'package:cointracker/features/profile/ui/widgets/profile_card.dart';
+import 'package:cointracker/shared/ui/widgets/scaffold_snackbar.dart';
 import 'package:cointracker/shared/utils/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -13,8 +15,7 @@ class ProfileContent extends StatefulWidget {
 }
 
 class _ProfileContentState extends State<ProfileContent> {
-  String? _email, _password;
-  late bool _isLoginCorrect;
+  SelectPhotoUseCase _selectPhotoUseCase = _getSelectPhotoUseCase();
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,18 @@ class _ProfileContentState extends State<ProfileContent> {
                               color: Colors.white,
                               size: 50.0,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              print('0');
+                              try {
+                                Image prova = _selectPhotoUseCase();
+                              } catch (e) {
+                                scaffoldSnackBar(
+                                  context: context,
+                                  text: 'error',
+                                  isError: true,
+                                );
+                              }
+                            },
                           ),
                           AvatarButton(
                             buttonText: "Take a beautiful Photo",
@@ -52,7 +64,9 @@ class _ProfileContentState extends State<ProfileContent> {
                               color: Colors.white,
                               size: 50.0,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              print(0);
+                            },
                           ),
                         ],
                       )));
@@ -60,7 +74,7 @@ class _ProfileContentState extends State<ProfileContent> {
             child: const Center(
               child: CircleAvatar(
                 backgroundImage: NetworkImage(
-                    'https://josefernandonieto.com/images/profile-big.jpg'),
+                    'https://lasletras.org/wp-content/uploads/s.jpg'),
                 radius: 75,
                 backgroundColor: Colors.red,
               ),
@@ -119,4 +133,9 @@ class _ProfileContentState extends State<ProfileContent> {
       ],
     );
   }
+}
+
+SelectPhotoUseCase _getSelectPhotoUseCase() {
+  SelectPhotoUseCase _selectPhotoUseCase = SelectPhotoUseCase();
+  return _selectPhotoUseCase;
 }

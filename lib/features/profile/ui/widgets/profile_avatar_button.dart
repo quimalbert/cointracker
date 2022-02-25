@@ -26,10 +26,7 @@ class AvatarButton extends StatelessWidget {
           textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           elevation: defaultElevation,
         ),
-        onPressed: () {
-          onPressed:
-          onPressed;
-        },
+        onPressed: onPressed,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
