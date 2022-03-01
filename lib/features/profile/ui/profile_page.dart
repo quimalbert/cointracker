@@ -11,8 +11,8 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
-      child: Scaffold(
+    return SafeArea(
+      child: const Scaffold(
         backgroundColor: Colors.white,
         body: ProfileContent(),
         appBar: GeneralTopAppBar(),

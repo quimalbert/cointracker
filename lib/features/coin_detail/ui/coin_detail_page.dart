@@ -11,8 +11,8 @@ class CoinDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: const Scaffold(
+    return const SafeArea(
+      child: Scaffold(
         backgroundColor: Colors.white,
         body: CoinDetailContent(),
         appBar: GeneralTopAppBar(),
