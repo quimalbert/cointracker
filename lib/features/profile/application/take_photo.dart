@@ -1,13 +1,13 @@
 import 'dart:io';
 
-import 'package:cointracker/features/profile/infrastructure/photo_local_data_source.dart';
+import '../infrastructure/photo_local_data_source.dart';
 
-class SelectPhotoUseCase {
+class TakePhotoUseCase {
   PhotoRemoteDataSource _photoRemoteDataSource = _getPhotoRemoteDataSource();
 
   Future<File> call() async {
     try {
-      return await _photoRemoteDataSource.selectPhoto();
+      return await _photoRemoteDataSource.takePhoto();
     } catch (e) {
       throw e;
     }
