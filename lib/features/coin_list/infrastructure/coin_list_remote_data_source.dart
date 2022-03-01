@@ -1,8 +1,24 @@
-class LoginRemoteDataSource {
-  Future<bool> checkCredentials({
-    required String email,
-    required String password,
-  }) async {
-    return false;
+import 'dart:convert';
+
+import 'package:cointracker/features/coin_list/domain/coin.dart';
+import 'package:cointracker/features/coin_list/infrastructure/models/coin_factory.dart';
+import 'package:cointracker/shared/utils/constants.dart';
+import 'package:http/http.dart' as http;
+
+class CoinListRemoteDataSource {
+  Future<List<Coin>> getCoinList() async {
+    List<Coin> _coinList = [];
+    final _httpResponse = await http.get(
+      Uri.parse(
+          'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=100'),
+      headers: {
+        "X-CMC_PRO_API_KEY": apiKey,
+      },
+    );
+
+    _coinList =
+        CoinFactory().fromJson(json: jsonDecode(_httpResponse.body)["data"]);
+
+    return _coinList;
   }
 }
