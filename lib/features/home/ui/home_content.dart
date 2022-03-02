@@ -11,7 +11,18 @@ class _HomeContentState extends State<HomeContent> {
   String? _email, _password;
   late bool _isLoginCorrect;
 
-  List<String> coinList = ["Bitcoin", "Ethereum", "Dogecoin", "Binance Coin", "Cardano", "Luna", "Polkadot", "Tether", "Solano", "USDCoin"];
+  List<String> coinList = [
+    "Bitcoin",
+    "Ethereum",
+    "Dogecoin",
+    "Binance Coin",
+    "Cardano",
+    "Luna",
+    "Polkadot",
+    "Tether",
+    "Solano",
+    "USDCoin"
+  ];
   List<String> exchanges = ["BINANCE", "BINANCE", "BINANCE"];
 
   @override
@@ -19,23 +30,17 @@ class _HomeContentState extends State<HomeContent> {
     return ListView(
       padding: EdgeInsets.only(top: 50),
       children: [
-        const Text(
-          "TOP WINERS",
-          textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)
-        ),
+        const Text("TOP WINERS",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
         coinSwiper(coinList: coinList, color: Colors.green),
-        const Text(
-            "TOP LOSERS",
+        const Text("TOP LOSERS",
             textAlign: TextAlign.center,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)
-        ),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
         coinSwiper(coinList: coinList, color: Colors.red),
-        const Text(
-            "EXCHANGES",
+        const Text("EXCHANGES",
             textAlign: TextAlign.center,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)
-        ),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
         coinSwiper(coinList: coinList, color: Colors.black)
       ],
     );

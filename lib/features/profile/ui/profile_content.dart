@@ -1,12 +1,17 @@
-import 'dart:ui';
+import 'dart:io';
 
 import 'package:cointracker/features/login/ui/login_page.dart';
 import 'package:cointracker/features/profile/application/select_photo.dart';
+import 'package:cointracker/features/profile/ui/widgets/change_password_confirmation.dart';
 import 'package:cointracker/features/profile/ui/widgets/profile_avatar_button.dart';
 import 'package:cointracker/features/profile/ui/widgets/profile_card.dart';
 import 'package:cointracker/shared/ui/widgets/scaffold_snackbar.dart';
 import 'package:cointracker/shared/utils/constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../application/take_photo.dart';
 
 class ProfileContent extends StatefulWidget {
   const ProfileContent({Key? key}) : super(key: key);
@@ -15,7 +20,11 @@ class ProfileContent extends StatefulWidget {
 }
 
 class _ProfileContentState extends State<ProfileContent> {
+  File? imgUrl;
   SelectPhotoUseCase _selectPhotoUseCase = _getSelectPhotoUseCase();
+  TakePhotoUseCase _takePhotoUseCase = _getTakePhotoUseCase();
+  final user = FirebaseAuth.instance.currentUser!;
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +42,7 @@ class _ProfileContentState extends State<ProfileContent> {
                   elevation: defaultElevation,
                   backgroundColor: Colors.white,
                   context: context,
-                  builder: (context) => Container(
+                  builder: (context) => SizedBox(
                       height: 290,
                       child: ListView(
                         children: [
@@ -47,7 +56,11 @@ class _ProfileContentState extends State<ProfileContent> {
                             onPressed: () {
                               print('0');
                               try {
-                                _selectPhotoUseCase();
+                                _selectPhotoUseCase().then((value) {
+                                  setState(() {
+                                    imgUrl = value;
+                                  });
+                                });
                               } catch (e) {
                                 scaffoldSnackBar(
                                   context: context,
@@ -65,34 +78,50 @@ class _ProfileContentState extends State<ProfileContent> {
                               size: 50.0,
                             ),
                             onPressed: () {
+                              _takePhotoUseCase().then((value) {
+                                setState(() {
+                                  imgUrl = value;
+                                });
+                              });
+
                               print(0);
                             },
                           ),
                         ],
                       )));
             }, // Image tapped
-            child: const Center(
+            child: Center(
               child: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    'https://lasletras.org/wp-content/uploads/s.jpg'),
+                backgroundImage: user.photoURL == null
+                    ? Image.asset('assets/images/default_profile.png').image
+                    : FileImage(imgUrl!),
                 radius: 75,
                 backgroundColor: Colors.red,
               ),
             ),
           ),
         ),
-        Text(
-          "@" + "SerreSiete",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            user.email!,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
           ),
         ),
         ProfileCard(
           buttonText: 'Change Password',
-          onPressed: () {},
+          onPressed: () {
+            auth.sendPasswordResetEmail(email: user.email!);
+            showDialog(
+                context: context,
+                builder: (context) => ChangePasswordConfirmation());
+            print("Changed password");
+          },
         ),
         ProfileCard(
           buttonText: 'Enable Biometric Login',
@@ -106,10 +135,10 @@ class _ProfileContentState extends State<ProfileContent> {
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(
             onTap: () {
+              FirebaseAuth.instance.signOut();
               Navigator.pushReplacementNamed(context, LoginPage.routeID);
-              print("Logout");
             },
-            child: Text(
+            child: const Text(
               "Logout",
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -138,4 +167,9 @@ class _ProfileContentState extends State<ProfileContent> {
 SelectPhotoUseCase _getSelectPhotoUseCase() {
   SelectPhotoUseCase _selectPhotoUseCase = SelectPhotoUseCase();
   return _selectPhotoUseCase;
+}
+
+TakePhotoUseCase _getTakePhotoUseCase() {
+  TakePhotoUseCase _takePhotoUseCase = TakePhotoUseCase();
+  return _takePhotoUseCase;
 }
