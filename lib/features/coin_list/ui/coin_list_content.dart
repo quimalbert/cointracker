@@ -1,5 +1,6 @@
 import 'package:cointracker/features/coin_list/application/load_coin_list.dart';
 import 'package:cointracker/features/coin_list/domain/coin.dart';
+import 'package:cointracker/shared/ui/styles.dart';
 import 'package:flutter/material.dart';
 
 class CoinListContent extends StatefulWidget {
@@ -30,10 +31,16 @@ class _CoinListContentState extends State<CoinListContent> {
     if (_isLoading) return CircularProgressIndicator();
 
     return ListView.builder(
+      physics: const BouncingScrollPhysics(),
       itemCount: _coinList.length,
       itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(_coinList.elementAt(index).name),
+        return Column(
+          children: [
+            ListTile(
+              title: Text(_coinList.elementAt(index).name),
+            ),
+            SizedBox(height: DEVICE_SCREEN_HEIGHT * 0.1),
+          ],
         );
       },
     );

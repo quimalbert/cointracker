@@ -11,9 +11,7 @@ class CoinListRemoteDataSource {
     final _httpResponse = await http.get(
       Uri.parse(
           'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=100'),
-      headers: {
-        "X-CMC_PRO_API_KEY": apiKey,
-      },
+      headers: {"X-CMC_PRO_API_KEY": apiKey},
     );
 
     _coinList =

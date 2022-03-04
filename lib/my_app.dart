@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
+import 'context.dart';
 import 'features/home/ui/home_page.dart';
 
 class MyApp extends StatefulWidget {
@@ -30,6 +31,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: Context.globalKey,
       home: FutureBuilder(
         future: firebaseInitialize(),
         builder: (context, snapshot) {

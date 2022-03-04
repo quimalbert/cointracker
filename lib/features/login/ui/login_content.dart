@@ -63,12 +63,13 @@ class _LoginContentState extends State<LoginContent> {
                 if (userCredential != null) {
                   Navigator.pushReplacementNamed(context, HomePage.routeID);
                 }
-              } else
+              } else {
                 scaffoldSnackBar(
                   context: context,
                   text: 'Wrong credentials',
                   isError: true,
                 );
+              }
             },
           ),
         ),
