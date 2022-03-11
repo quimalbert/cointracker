@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:cointracker/features/coin_list/infrastructure/models/coin_factory.dart';
 import 'package:cointracker/shared/domain/coin.dart';
+import 'package:cointracker/shared/infrastructure/models/coin_factory.dart';
 import 'package:cointracker/shared/utils/constants.dart';
 import 'package:http/http.dart' as http;
 

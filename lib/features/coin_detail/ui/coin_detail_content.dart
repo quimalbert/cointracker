@@ -31,6 +31,12 @@ class _CoinDetailContentState extends State<CoinDetailContent> {
             );
           },
         ),
+        SizedBox(height: DEVICE_SCREEN_HEIGHT * 0.025),
+        Text(
+          widget.coin.name + ' (' + widget.coin.symbol + ')',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: DEVICE_SCREEN_HEIGHT * 0.05),
+        ),
       ],
     );
   }

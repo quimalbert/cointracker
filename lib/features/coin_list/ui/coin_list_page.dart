@@ -1,5 +1,6 @@
 import 'package:cointracker/shared/ui/app_bar/general_bottom_app_bar.dart';
 import 'package:cointracker/shared/ui/app_bar/general_top_app_bar.dart';
+import 'package:cointracker/shared/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 import 'coin_list_content.dart';
@@ -11,9 +12,9 @@ class CoinListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: const Scaffold(
-        backgroundColor: Colors.white,
+    return const SafeArea(
+      child: Scaffold(
+        backgroundColor: backgroundColor,
         body: CoinListContent(),
         appBar: GeneralTopAppBar(),
         bottomNavigationBar: GeneralBottomAppBar(),

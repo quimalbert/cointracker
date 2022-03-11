@@ -1,5 +1,5 @@
-import 'package:cointracker/features/coin_detail/ui/coin_detail_page.dart';
 import 'package:cointracker/features/coin_list/application/load_coin_list.dart';
+import 'package:cointracker/features/coin_list/ui/widgets/coin_list_card.dart';
 import 'package:cointracker/shared/domain/coin.dart';
 import 'package:flutter/material.dart';
 
@@ -40,24 +40,15 @@ class _CoinListContentState extends State<CoinListContent> {
     return RefreshIndicator(
       onRefresh: _refresh,
       child: ListView.builder(
-        physics: const BouncingScrollPhysics(),
-        itemCount: _coinList.length,
-        itemBuilder: (context, index) => Column(
-          children: [
-            ListTile(
-              title: Text(_coinList.elementAt(index).name +
+          physics: const BouncingScrollPhysics(),
+          itemCount: _coinList.length,
+          itemBuilder: (context, index) => CoinListCard(
+              coin: _coinList.elementAt(index),
+              leadingText: _coinList.elementAt(index).name +
                   ' / ' +
-                  _coinList.elementAt(index).symbol),
-              trailing: Text(
-                  '\$' + _coinList.elementAt(index).price.toStringAsFixed(2)),
-              onTap: () {
-                Navigator.pushNamed(context, CoinDetailPage.routeID,
-                    arguments: _coinList.elementAt(index));
-              },
-            ),
-          ],
-        ),
-      ),
+                  _coinList.elementAt(index).symbol,
+              trailingText:
+                  '\$' + _coinList.elementAt(index).price.toStringAsFixed(2))),
     );
   }
 
