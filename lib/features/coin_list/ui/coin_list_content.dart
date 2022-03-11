@@ -1,5 +1,6 @@
+import 'package:cointracker/features/coin_detail/ui/coin_detail_page.dart';
 import 'package:cointracker/features/coin_list/application/load_coin_list.dart';
-import 'package:cointracker/features/coin_list/domain/coin.dart';
+import 'package:cointracker/shared/domain/coin.dart';
 import 'package:flutter/material.dart';
 
 class CoinListContent extends StatefulWidget {
@@ -49,7 +50,10 @@ class _CoinListContentState extends State<CoinListContent> {
                   _coinList.elementAt(index).symbol),
               trailing: Text(
                   '\$' + _coinList.elementAt(index).price.toStringAsFixed(2)),
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, CoinDetailPage.routeID,
+                    arguments: _coinList.elementAt(index));
+              },
             ),
           ],
         ),

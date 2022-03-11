@@ -1,20 +1,36 @@
+import 'package:cointracker/shared/domain/coin.dart';
+import 'package:cointracker/shared/ui/styles.dart';
 import 'package:flutter/material.dart';
 
 class CoinDetailContent extends StatefulWidget {
-  const CoinDetailContent({Key? key}) : super(key: key);
+  final Coin coin;
+
+  const CoinDetailContent({Key? key, required this.coin}) : super(key: key);
+
   @override
   State<CoinDetailContent> createState() => _CoinDetailContentState();
 }
 
 class _CoinDetailContentState extends State<CoinDetailContent> {
-  String? _email, _password;
-  late bool _isLoginCorrect;
-
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children: const [
-        Text("Coin Detail"),
+      physics: const BouncingScrollPhysics(),
+      children: [
+        SizedBox(height: DEVICE_SCREEN_HEIGHT * 0.025),
+        Image.network(
+          'https://cryptoicons.org/api/color/${widget.coin.symbol.toLowerCase()}/200',
+          height: DEVICE_SCREEN_HEIGHT * 0.25,
+          width: DEVICE_SCREEN_WIDTH * 0.25,
+          errorBuilder:
+              (BuildContext context, Object exception, StackTrace? stackTrace) {
+            return Image.asset(
+              'assets/images/no-image.png',
+              height: DEVICE_SCREEN_HEIGHT * 0.25,
+              width: DEVICE_SCREEN_WIDTH * 0.25,
+            );
+          },
+        ),
       ],
     );
   }

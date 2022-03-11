@@ -1,5 +1,5 @@
-import 'package:cointracker/features/coin_list/domain/coin.dart';
 import 'package:cointracker/features/coin_list/infrastructure/coin_list_remote_data_source.dart';
+import 'package:cointracker/shared/domain/coin.dart';
 
 class LoadCoinListUseCase {
   Future<List<Coin>> call() async {

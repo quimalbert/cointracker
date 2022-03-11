@@ -12,6 +12,7 @@ class GeneralBottomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
+      elevation: 10,
       color: backgroundColor,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

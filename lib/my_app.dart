@@ -47,9 +47,9 @@ class _MyAppState extends State<MyApp> {
         //LoginPage.routeID: (context) => LoginPage(),
         HomePage.routeID: (context) => HomePage(),
         CoinListPage.routeID: (context) => CoinListPage(),
+        CoinDetailPage.routeID: (context) => CoinDetailPage(),
         PortfolioPage.routeID: (context) => PortfolioPage(),
         ProfilePage.routeID: (context) => ProfilePage(),
-        CoinDetailPage.routeID: (context) => CoinDetailPage(),
       },
     );
   }
