@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cointracker/features/login/ui/login_page.dart';
 import 'package:cointracker/features/profile/application/select_photo.dart';
 import 'package:cointracker/features/profile/ui/widgets/change_password_confirmation.dart';
+import 'package:cointracker/features/profile/ui/widgets/enable_biometric_confirmation.dart';
 import 'package:cointracker/features/profile/ui/widgets/profile_avatar_button.dart';
 import 'package:cointracker/features/profile/ui/widgets/profile_card.dart';
 import 'package:cointracker/shared/ui/widgets/scaffold_snackbar.dart';
@@ -11,6 +12,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../shared/application/read_user_data.dart';
+import '../../../shared/application/write_user_data.dart';
 import '../application/take_photo.dart';
 
 class ProfileContent extends StatefulWidget {
@@ -20,14 +23,35 @@ class ProfileContent extends StatefulWidget {
 }
 
 class _ProfileContentState extends State<ProfileContent> {
+  late String _textMessage, _titleMessage;
+
   File? imgUrl;
+  late Map<String, dynamic> _userMap;
+
   SelectPhotoUseCase _selectPhotoUseCase = _getSelectPhotoUseCase();
   TakePhotoUseCase _takePhotoUseCase = _getTakePhotoUseCase();
-  final user = FirebaseAuth.instance.currentUser!;
   FirebaseAuth auth = FirebaseAuth.instance;
+
+  bool _isLoading = true;
+
+  late bool _isBiometricEnabled;
+  @override
+  void initState() {
+    setState(() {
+      _isLoading = true;
+    });
+    ReadUserDataUseCase().call().then((value) => setState(() {
+          _userMap = value;
+          _isLoading = false;
+        }));
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) return Center(child: CircularProgressIndicator());
+
     return ListView(
       children: [
         BottomSheet(
@@ -92,9 +116,9 @@ class _ProfileContentState extends State<ProfileContent> {
             }, // Image tapped
             child: Center(
               child: CircleAvatar(
-                backgroundImage: user.photoURL == null
+                backgroundImage: _userMap["profile_picture_url"] == null
                     ? Image.asset('assets/images/default_profile.png').image
-                    : FileImage(imgUrl!),
+                    : FileImage(File(_userMap["profile_picture_url"]!)),
                 radius: 75,
                 backgroundColor: Colors.red,
               ),
@@ -104,7 +128,7 @@ class _ProfileContentState extends State<ProfileContent> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            user.email!,
+            _userMap["email"]!,
             textAlign: TextAlign.center,
             style: const TextStyle(
               fontSize: 22,
@@ -116,7 +140,7 @@ class _ProfileContentState extends State<ProfileContent> {
         ProfileCard(
           buttonText: 'Change Password',
           onPressed: () {
-            auth.sendPasswordResetEmail(email: user.email!);
+            auth.sendPasswordResetEmail(email: _userMap["email"]!);
             showDialog(
                 context: context,
                 builder: (context) => ChangePasswordConfirmation());
@@ -125,7 +149,27 @@ class _ProfileContentState extends State<ProfileContent> {
         ),
         ProfileCard(
           buttonText: 'Enable Biometric Login',
-          onPressed: () {},
+          onPressed: () {
+            if (isBiometricEnabled()) {
+              _isBiometricEnabled = false;
+              _titleMessage = "Disabled!";
+              _textMessage = "Biometric login has been disabled";
+            } else {
+              _isBiometricEnabled = true;
+              _textMessage = "Biometric login has been enabled";
+              _titleMessage = "Enabled!";
+            }
+            showDialog(
+                context: context,
+                builder: (context) => EnableBiometricConfirmation(
+                      textMessage: _textMessage,
+                      titleText: _titleMessage,
+                    ));
+            WriteUserDataUseCase().call(
+                email: _userMap["email"],
+                pictureURL: _userMap["pictureURL"],
+                isBiometricEnabled: _isBiometricEnabled);
+          },
         ),
         ProfileCard(
           buttonText: 'Dark Mode',
@@ -161,6 +205,13 @@ class _ProfileContentState extends State<ProfileContent> {
         )
       ],
     );
+  }
+
+  bool isBiometricEnabled() {
+    ReadUserDataUseCase().call().then((value) => setState(() {
+          _userMap = value;
+        }));
+    return _userMap["isBiometricEnabled"];
   }
 }
 

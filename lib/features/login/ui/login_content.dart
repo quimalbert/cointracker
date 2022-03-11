@@ -1,11 +1,15 @@
 import 'package:cointracker/features/home/ui/home_page.dart';
 import 'package:cointracker/features/login/application/check_credentials.dart';
+import 'package:cointracker/features/login/infrastructure/biometric_login_local_data_source.dart';
 import 'package:cointracker/features/login/ui/widgets/login_textfield.dart';
 import 'package:cointracker/features/login/ui/widgets/reset_password.dart';
+import 'package:cointracker/shared/application/read_user_data.dart';
+import 'package:cointracker/shared/ui/styles.dart';
 import 'package:cointracker/shared/ui/widgets/scaffold_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../../../shared/application/write_user_data.dart';
 
 class LoginContent extends StatefulWidget {
   const LoginContent({Key? key}) : super(key: key);
@@ -15,15 +19,35 @@ class LoginContent extends StatefulWidget {
 }
 
 class _LoginContentState extends State<LoginContent> {
-  String? _email, _password;
+  String _email = '', _password = '';
   FirebaseAuth auth = FirebaseAuth.instance;
   late bool _isLoginCorrect;
+  bool _isLoading = true;
+  late Map<String, dynamic> _userMap;
 
   final CheckCredentialsUseCase _checkCredentialsUsecase =
       _getCheckCredentialsUseCase();
 
   @override
+  void initState() {
+    setState(() {
+      _isLoading = true;
+    });
+    ReadUserDataUseCase().call().then((value) => setState(() {
+          _userMap = value;
+          if (_userMap["isBiometricEnabled"]) {
+            openBiometricLogin();
+          }
+          _isLoading = false;
+        }));
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (_isLoading) return Center(child: CircularProgressIndicator());
+
     return ListView(
       children: [
         const SizedBox(height: 40),
@@ -45,7 +69,7 @@ class _LoginContentState extends State<LoginContent> {
           child: ElevatedButton(
             child: const Text('Login'),
             onPressed: () async {
-              if (_email == null || _password == null) {
+              if (!(_email.isNotEmpty && _password.isNotEmpty)) {
                 scaffoldSnackBar(
                   context: context,
                   text: 'Email and Password can' + "'" + 't be empty',
@@ -54,13 +78,15 @@ class _LoginContentState extends State<LoginContent> {
                 return;
               }
               _isLoginCorrect = await _checkCredentialsUsecase(
-                  email: _email!, password: _password!);
+                  email: _email, password: _password);
 
               if (_isLoginCorrect) {
                 UserCredential userCredential = await FirebaseAuth.instance
                     .signInWithEmailAndPassword(
-                        email: _email!, password: _password!);
+                        email: _email, password: _password);
                 if (userCredential != null) {
+                  WriteUserDataUseCase().call(
+                      email: _email, pictureURL: '', isBiometricEnabled: false);
                   Navigator.pushReplacementNamed(context, HomePage.routeID);
                 }
               } else {
@@ -93,8 +119,29 @@ class _LoginContentState extends State<LoginContent> {
             },
           ),
         ),
+        SizedBox(
+          height: DEVICE_SCREEN_HEIGHT * 0.1,
+        ),
+        if (_userMap["isBiometricEnabled"] != null &&
+            _userMap["isBiometricEnabled"])
+          InkWell(
+            onTap: openBiometricLogin,
+            child: Icon(
+              Icons.fingerprint,
+              color: Colors.grey,
+              size: 80.0,
+              semanticLabel: 'Text to announce in accessibility modes',
+            ),
+          ),
       ],
     );
+  }
+
+  Future<void> openBiometricLogin() async {
+    final isAuthenticated = await BiometricLogin.authenticate();
+    if (isAuthenticated) {
+      Navigator.pushReplacementNamed(context, HomePage.routeID);
+    }
   }
 }
 
@@ -102,17 +149,4 @@ CheckCredentialsUseCase _getCheckCredentialsUseCase() {
   CheckCredentialsUseCase _checkCredentialsUseCase = CheckCredentialsUseCase();
 
   return _checkCredentialsUseCase;
-}
-
-Future signIn(String email, String password) async {
-  try {
-    UserCredential userCredential = await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: email, password: password);
-  } on FirebaseAuthException catch (e) {
-    if (e.code == 'user-not-found') {
-      print('No user found for that email.');
-    } else if (e.code == 'wrong-password') {
-      print('Wrong password provided for that user.');
-    }
-  }
 }
