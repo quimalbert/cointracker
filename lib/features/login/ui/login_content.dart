@@ -35,7 +35,7 @@ class _LoginContentState extends State<LoginContent> {
     });
     ReadUserDataUseCase().call().then((value) => setState(() {
           _userMap = value;
-          if (_userMap["isBiometricEnabled"]) {
+          if (_userMap["isBiometricEnabled"] != null && _userMap["isBiometricEnabled"]) {
             openBiometricLogin();
           }
           _isLoading = false;

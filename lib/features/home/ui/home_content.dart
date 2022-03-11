@@ -1,5 +1,9 @@
-import 'package:cointracker/features/home/ui/coin_swiper.dart';
+import 'package:cointracker/features/home/application/load_exchange_list.dart';
+import 'package:cointracker/features/home/ui/widgets/coin_swiper.dart';
+import 'package:cointracker/features/home/ui/widgets/exchange_swiper.dart';
 import 'package:flutter/material.dart';
+
+import '../domain/exchange.dart';
 
 class HomeContent extends StatefulWidget {
   const HomeContent({Key? key}) : super(key: key);
@@ -8,41 +12,45 @@ class HomeContent extends StatefulWidget {
 }
 
 class _HomeContentState extends State<HomeContent> {
-  String? _email, _password;
-  late bool _isLoginCorrect;
+  List<Exchange> _exchangeList = [];
+  bool _isLoading = true;
 
-  List<String> coinList = [
-    "Bitcoin",
-    "Ethereum",
-    "Dogecoin",
-    "Binance Coin",
-    "Cardano",
-    "Luna",
-    "Polkadot",
-    "Tether",
-    "Solano",
-    "USDCoin"
-  ];
-  List<String> exchanges = ["BINANCE", "BINANCE", "BINANCE"];
+  final LoadExchangesListUseCase _loadExchangesListUseCase = _getLoadExchangesListUseCase();
+
+  @override
+  void initState() {
+    _loadExchangesListUseCase().then((value) {
+      _exchangeList = value;
+      setState(() => _isLoading = false);
+    });
+
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.only(top: 50),
+      padding: const EdgeInsets.only(top: 50),
       children: [
         const Text("TOP WINERS",
             textAlign: TextAlign.center,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-        coinSwiper(coinList: coinList, color: Colors.green),
+        coinSwiper(color: Colors.green),
         const Text("TOP LOSERS",
             textAlign: TextAlign.center,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-        coinSwiper(coinList: coinList, color: Colors.red),
+        coinSwiper(color: Colors.red),
         const Text("EXCHANGES",
             textAlign: TextAlign.center,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-        coinSwiper(coinList: coinList, color: Colors.black)
+        exchangeSwiper(exchangeList: _exchangeList)
       ],
     );
   }
+}
+
+LoadExchangesListUseCase _getLoadExchangesListUseCase() {
+  LoadExchangesListUseCase _loadExchangesListUseCase = LoadExchangesListUseCase();
+  return _loadExchangesListUseCase;
 }
