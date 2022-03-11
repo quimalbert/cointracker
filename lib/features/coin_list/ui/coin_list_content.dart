@@ -1,6 +1,5 @@
 import 'package:cointracker/features/coin_list/application/load_coin_list.dart';
 import 'package:cointracker/features/coin_list/domain/coin.dart';
-import 'package:cointracker/shared/ui/styles.dart';
 import 'package:flutter/material.dart';
 
 class CoinListContent extends StatefulWidget {
@@ -12,38 +11,54 @@ class CoinListContent extends StatefulWidget {
 
 class _CoinListContentState extends State<CoinListContent> {
   List<Coin> _coinList = [];
-  bool _isLoading = true;
+  late bool _isLoading;
 
   final LoadCoinListUseCase _loadCoinListUseCase = _getLoadCoinListUseCase();
 
   @override
   void initState() {
-    _loadCoinListUseCase().then((value) {
-      _coinList = value;
-      setState(() => _isLoading = false);
-    });
+    _initState();
 
     super.initState();
   }
 
+  void _initState() {
+    setState(() => _isLoading = true);
+
+    _loadCoinListUseCase().then((value) {
+      _coinList = value;
+
+      setState(() => _isLoading = false);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) return CircularProgressIndicator();
+    if (_isLoading) return const Center(child: CircularProgressIndicator());
 
-    return ListView.builder(
-      physics: const BouncingScrollPhysics(),
-      itemCount: _coinList.length,
-      itemBuilder: (context, index) {
-        return Column(
+    return RefreshIndicator(
+      onRefresh: _refresh,
+      child: ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        itemCount: _coinList.length,
+        itemBuilder: (context, index) => Column(
           children: [
             ListTile(
-              title: Text(_coinList.elementAt(index).name),
+              title: Text(_coinList.elementAt(index).name +
+                  ' / ' +
+                  _coinList.elementAt(index).symbol),
+              trailing: Text(
+                  '\$' + _coinList.elementAt(index).price.toStringAsFixed(2)),
+              onTap: () {},
             ),
-            SizedBox(height: DEVICE_SCREEN_HEIGHT * 0.1),
           ],
-        );
-      },
+        ),
+      ),
     );
+  }
+
+  Future<void> _refresh() async {
+    _initState();
   }
 }
 
