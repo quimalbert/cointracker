@@ -1,19 +1,29 @@
-import 'package:cointracker/shared/ui/app_bar/general_bottom_app_bar.dart';
-import 'package:cointracker/shared/ui/app_bar/general_top_app_bar.dart';
+import 'package:cointracker/features/exchange_detail/application/load_exchange_detail_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ExchangeDetailPage extends StatelessWidget {
-  static const String routeID = '/exhangedetail';
+class ExchangeDetail extends StatefulWidget {
+  const ExchangeDetail({Key? key}) : super(key: key);
+  @override
+  State<ExchangeDetail> createState() => _ExchangeDetail();
+}
 
-  const ExchangeDetailPage({Key? key}) : super(key: key);
+class _ExchangeDetail extends State<ExchangeDetail> {
+  List<dynamic> hola = [];
+  final LoadExchangeDetailUseCase _loadCoinListUseCase =
+      _getLoadExchangeDetailUseCase();
 
   @override
+  void initState() {
+    _getLoadExchangeDetailUseCase().call().then((value) {
+      hola = value;
+    });
+    initState();
+  }
+
   Widget build(BuildContext context) {
-    final List<String> exchangeInfo = ModalRoute
-        .of(context)!
-        .settings
-        .arguments as List<String>;
+    final List<String> exchangeInfo =
+        ModalRoute.of(context)!.settings.arguments as List<String>;
 
     final String exchangeName = exchangeInfo.elementAt(0).toString();
     final String imageURL = exchangeInfo.elementAt(1).toString();
@@ -36,18 +46,13 @@ class ExchangeDetailPage extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(top: 20.0, bottom: 20.0),
               alignment: Alignment.topCenter,
-              child: Image.network(
-                  imageURL,
-                  height: 100.0,
-                  fit: BoxFit.contain
-              ),
+              child:
+                  Image.network(imageURL, height: 100.0, fit: BoxFit.contain),
             ),
             Text(
               exchangeName,
-              style: const TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold
-              ),
+              style:
+                  const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
             ),
             Text(
               yearEstablished,
@@ -58,25 +63,25 @@ class ExchangeDetailPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 30.0),
               //apply padding to all four sides
-              child: Text(
-                  'Country: ' + country
-              ),
+              child: Text('Country: ' + country),
             ),
             ElevatedButton(
-                child: const Text('URL'),
-                onPressed: ()=> _launchURL(url),
-                style: const ButtonStyle(
-                ),
+              child: const Text('URL'),
+              onPressed: () => _launchURL(url),
+              style: const ButtonStyle(),
             ),
           ],
         ),
-        appBar: const GeneralTopAppBar(),
-        bottomNavigationBar: const GeneralBottomAppBar(),
       ),
     );
   }
 
-  _launchURL(String url){
+  _launchURL(String url) {
     launch(url);
   }
+}
+
+LoadExchangeDetailUseCase _getLoadExchangeDetailUseCase() {
+  LoadExchangeDetailUseCase _loadExchageDetail = LoadExchangeDetailUseCase();
+  return _loadExchageDetail;
 }
