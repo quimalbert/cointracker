@@ -1,23 +1,23 @@
-import 'package:cointracker/features/home/domain/exchange.dart';
+import 'package:cointracker/shared/domain/exchange.dart';
 
 class ExchangesFactory {
   List<Exchange> fromJson({required List<dynamic> json}) {
-    List<Exchange> _coinList = [];
+    List<Exchange> _exchangeList = [];
 
-    for (Map<String, dynamic> exchangeJSON in json) {
-      _coinList.add(
+    for (Map<String, dynamic> exchangeJson in json) {
+      _exchangeList.add(
         Exchange(
-          id: exchangeJSON['id'],
-          name: exchangeJSON['name'],
-          year_established: exchangeJSON['year_established'],
-          country: exchangeJSON['country'],
-          //description: exchangeJSON['description'],
-          url: exchangeJSON['url'],
-          image: exchangeJSON['image']
+          id: exchangeJson['id'],
+          name: exchangeJson['name'],
+          yearEstablished: exchangeJson['year_established'] ?? 0,
+          country: exchangeJson['country'] ?? 'Unknown',
+          description: exchangeJson['description'] ?? 'Unknown',
+          url: exchangeJson['url'] ?? '',
+          imageURL: exchangeJson['image'],
         ),
       );
     }
 
-    return _coinList;
+    return _exchangeList;
   }
 }

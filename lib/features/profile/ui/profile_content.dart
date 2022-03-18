@@ -53,6 +53,7 @@ class _ProfileContentState extends State<ProfileContent> {
     if (_isLoading) return Center(child: CircularProgressIndicator());
 
     return ListView(
+      physics: const BouncingScrollPhysics(),
       children: [
         BottomSheet(
           onClosing: () {},
@@ -69,6 +70,7 @@ class _ProfileContentState extends State<ProfileContent> {
                   builder: (context) => SizedBox(
                       height: 290,
                       child: ListView(
+                        physics: const BouncingScrollPhysics(),
                         children: [
                           AvatarButton(
                             buttonText: "Select from Gallery",

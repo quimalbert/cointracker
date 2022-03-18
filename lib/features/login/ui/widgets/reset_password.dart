@@ -22,6 +22,7 @@ class _ResetPassPageState extends State<ResetPassPage> {
       color: backgroundColor,
       child: Center(
         child: ListView(
+          physics: const BouncingScrollPhysics(),
           children: <Widget>[
             const Padding(
               padding: EdgeInsets.all(20.0),

@@ -13,6 +13,7 @@ class _PortfolioContentState extends State<PortfolioContent> {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      physics: const BouncingScrollPhysics(),
       children: [
         Text("Portolio"),
       ],

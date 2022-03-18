@@ -35,7 +35,8 @@ class _LoginContentState extends State<LoginContent> {
     });
     ReadUserDataUseCase().call().then((value) => setState(() {
           _userMap = value;
-          if (_userMap["isBiometricEnabled"] != null && _userMap["isBiometricEnabled"]) {
+          if (_userMap["isBiometricEnabled"] != null &&
+              _userMap["isBiometricEnabled"]) {
             openBiometricLogin();
           }
           _isLoading = false;
@@ -49,6 +50,7 @@ class _LoginContentState extends State<LoginContent> {
     if (_isLoading) return Center(child: CircularProgressIndicator());
 
     return ListView(
+      physics: const BouncingScrollPhysics(),
       children: [
         const SizedBox(height: 40),
         Image.asset('assets/images/logo.png', scale: 1.5),

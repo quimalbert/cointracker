@@ -1,11 +1,12 @@
 import 'package:cointracker/features/home/application/load_exchange_list.dart';
-import 'package:cointracker/features/home/ui/widgets/coin_swiper.dart';
-import 'package:cointracker/features/home/ui/widgets/exchange_swiper.dart';
+import 'package:cointracker/features/home/ui/widgets/swipers/coin_swiper.dart';
+import 'package:cointracker/features/home/ui/widgets/swipers/exchange_swiper.dart';
+import 'package:cointracker/shared/application/load_coin_list.dart';
+import 'package:cointracker/shared/domain/coin.dart';
+import 'package:cointracker/shared/ui/styles.dart';
 import 'package:flutter/material.dart';
 
-import '../../../shared/domain/coin.dart';
-import '../../coin_list/application/load_coin_list.dart';
-import '../domain/exchange.dart';
+import '../../../shared/domain/exchange.dart';
 
 class HomeContent extends StatefulWidget {
   const HomeContent({Key? key}) : super(key: key);
@@ -15,8 +16,7 @@ class HomeContent extends StatefulWidget {
 
 class _HomeContentState extends State<HomeContent> {
   List<Exchange> _exchangeList = [];
-  List<Coin> _coinListWinners = [];
-  List<Coin> _coinListLosers = [];
+  List<Coin> _coinList = [];
   bool _isLoading = true;
 
   final LoadExchangesListUseCase _loadExchangesListUseCase =
@@ -27,45 +27,48 @@ class _HomeContentState extends State<HomeContent> {
   void initState() {
     _loadExchangesListUseCase().then((value) {
       _exchangeList = value;
-    });
 
-    _loadCoinListUseCase().then((value) {
-      _coinListLosers = value;
-      _coinListLosers.sort((a, b) {
-        return a.priceChange7d.compareTo(b.priceChange7d);
+      _loadCoinListUseCase().then((value) {
+        _coinList = value;
+        setState(() => _isLoading = false);
       });
-
-      _coinListWinners = value;
-      _coinListWinners.sort((b, a) {
-        return b.priceChange7d.compareTo(a.priceChange7d);
-      });
-      setState(() => _isLoading = false);
     });
 
     super.initState();
   }
 
-  void _initState() {
-    setState(() => _isLoading = true);
-  }
-
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) return Center(child: CircularProgressIndicator());
+
     return ListView(
-      padding: const EdgeInsets.only(top: 50),
+      physics: const BouncingScrollPhysics(),
       children: [
-        const Text("TOP WINERS",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-        coinSwiper(color: Colors.green, coinList: _coinListWinners),
-        const Text("TOP LOSERS",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-        coinSwiper(color: Colors.red, coinList: _coinListLosers),
-        const Text("EXCHANGES",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-        exchangeSwiper(exchangeList: _exchangeList)
+        SizedBox(height: DEVICE_SCREEN_HEIGHT * 0.025),
+        const Text(
+          "TOP WINNERS",
+          textAlign: TextAlign.center,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+        CoinSwiper(
+          isWinner: true,
+          coinList: _coinList,
+        ),
+        const Text(
+          "TOP LOSERS",
+          textAlign: TextAlign.center,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+        CoinSwiper(
+          isWinner: false,
+          coinList: _coinList,
+        ),
+        const Text(
+          "EXCHANGES",
+          textAlign: TextAlign.center,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+        ExchangeSwiper(exchangeList: _exchangeList)
       ],
     );
   }

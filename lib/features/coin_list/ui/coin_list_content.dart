@@ -1,5 +1,5 @@
-import 'package:cointracker/features/coin_list/application/load_coin_list.dart';
 import 'package:cointracker/features/coin_list/ui/widgets/coin_list_card.dart';
+import 'package:cointracker/shared/application/load_coin_list.dart';
 import 'package:cointracker/shared/domain/coin.dart';
 import 'package:flutter/material.dart';
 
