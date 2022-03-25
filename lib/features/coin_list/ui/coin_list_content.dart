@@ -48,7 +48,8 @@ class _CoinListContentState extends State<CoinListContent> {
                   ' / ' +
                   _coinList.elementAt(index).symbol,
               trailingText:
-                  '\$' + _coinList.elementAt(index).price.toStringAsFixed(2))),
+                  '\$' + _coinList.elementAt(index).price.toStringAsFixed(2),
+              hasIncrease: _coinList.elementAt(index).priceChange24h >= 0)),
     );
   }
 

@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
         PortfolioPage.routeID: (context) => const PortfolioPage(),
         ProfilePage.routeID: (context) => const ProfilePage(),
         CoinDetailPage.routeID: (context) => const CoinDetailPage(),
-        ExchangeDetailPage.routeID: (context) => const ExchangeDetailPage()
+        ExchangeDetailPage.routeID: (context) => const ExchangeDetailPage(),
       },
     );
   }

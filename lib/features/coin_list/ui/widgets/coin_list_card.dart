@@ -1,11 +1,13 @@
 import 'package:cointracker/features/coin_detail/ui/coin_detail_page.dart';
 import 'package:cointracker/shared/domain/coin.dart';
 import 'package:cointracker/shared/ui/styles.dart';
+import 'package:cointracker/shared/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class CoinListCard extends StatelessWidget {
   final String leadingText;
   final String trailingText;
+  final bool hasIncrease;
 
   final Coin coin;
 
@@ -13,6 +15,7 @@ class CoinListCard extends StatelessWidget {
     Key? key,
     required this.leadingText,
     required this.trailingText,
+    required this.hasIncrease,
     required this.coin,
   }) : super(key: key);
 
@@ -22,7 +25,7 @@ class CoinListCard extends StatelessWidget {
       height: DEVICE_SCREEN_HEIGHT * 0.1,
       child: Card(
         elevation: 10,
-        color: Colors.redAccent,
+        color: backgroundColor,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
         child: Padding(
@@ -44,8 +47,8 @@ class CoinListCard extends StatelessWidget {
                 children: [
                   Text(
                     trailingText,
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: hasIncrease ? Colors.green : Colors.red,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

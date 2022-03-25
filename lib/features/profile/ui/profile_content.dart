@@ -11,6 +11,7 @@ import 'package:cointracker/shared/utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../../shared/application/read_user_data.dart';
 import '../../../shared/application/write_user_data.dart';
@@ -196,15 +197,13 @@ class _ProfileContentState extends State<ProfileContent> {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: GestureDetector(
-            onTap: () {
-              print("Generate QR");
-            },
-            child: Text("hola"),
+        Center(
+          child: QrImage(
+              data: _userMap["email"],
+              version: QrVersions.auto,
+              size: 150.0,
           ),
-        )
+          ),
       ],
     );
   }

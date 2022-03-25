@@ -39,9 +39,10 @@ class GeneralBottomAppBar extends StatelessWidget {
               tooltip: 'Portfolio',
               onPressed: () {
                 if (ModalRoute.of(context)!.settings.name !=
-                    PortfolioPage.routeID)
+                    PortfolioPage.routeID) {
                   Navigator.pushReplacementNamed(
                       context, PortfolioPage.routeID);
+                }
               }),
           MenuIcon(
             iconData: Icons.person,
