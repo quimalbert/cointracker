@@ -23,8 +23,8 @@ class CoinCard extends StatelessWidget {
             Container(
                 height: 100,
                 width: 100,
-                padding: const EdgeInsets.all(5.0),
-                margin: const EdgeInsets.only(bottom: 5.0),
+                padding: const EdgeInsets.all(10.0),
+                margin: const EdgeInsets.all(5.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
@@ -34,16 +34,23 @@ class CoinCard extends StatelessWidget {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10.0),
-                  child: Image.network(
-                    'https://cryptoicons.org/api/color/${coin.symbol.toLowerCase()}/200',
+                  child: Image.asset(
+                    'assets/coin_logos/${coin.symbol}.png',
                     height: 100.0,
                     width: 100.0,
                     fit: BoxFit.fill,
                   ),
                 )),
-            const Text(
-              'Exemple',
+            Text(
+              coin.name,
               textAlign: TextAlign.center,
+              style: const TextStyle(fontWeight: FontWeight.bold)
+            ),
+            Padding(
+                padding:  const EdgeInsets.only(top: 5),
+                child: Text(
+                    '\$${coin.price.toStringAsFixed(3)}'
+                ),
             ),
             const SizedBox(height: 5.0),
           ],

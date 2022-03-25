@@ -17,6 +17,8 @@ class HomeContent extends StatefulWidget {
 class _HomeContentState extends State<HomeContent> {
   List<Exchange> _exchangeList = [];
   List<Coin> _coinList = [];
+  final List<Coin> _coinListWinners = [];
+  final List<Coin> _coinListLosers = [];
   bool _isLoading = true;
 
   final LoadExchangesListUseCase _loadExchangesListUseCase =
@@ -30,6 +32,14 @@ class _HomeContentState extends State<HomeContent> {
 
       _loadCoinListUseCase().then((value) {
         _coinList = value;
+
+        for (Coin coin in _coinList) {
+          if(coin.priceChange7d > 0){
+            _coinListWinners.add(coin);
+          } else {
+            _coinListLosers.add(coin);
+          }
+        }
         setState(() => _isLoading = false);
       });
     });
@@ -52,7 +62,7 @@ class _HomeContentState extends State<HomeContent> {
         ),
         CoinSwiper(
           isWinner: true,
-          coinList: _coinList,
+          coinList: _coinListWinners,
         ),
         const Text(
           "TOP LOSERS",
@@ -61,7 +71,7 @@ class _HomeContentState extends State<HomeContent> {
         ),
         CoinSwiper(
           isWinner: false,
-          coinList: _coinList,
+          coinList: _coinListLosers,
         ),
         const Text(
           "EXCHANGES",

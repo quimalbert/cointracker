@@ -20,7 +20,7 @@ class CoinSwiper extends StatelessWidget {
           pageSnapping: false,
           physics: const BouncingScrollPhysics(),
           controller: PageController(initialPage: 1, viewportFraction: 0.3),
-          itemCount: 10,
+          itemCount: coinList.length,
           itemBuilder: (context, index) => CoinCard(
             isWinner: isWinner,
             coin: coinList.elementAt(index),
