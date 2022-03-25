@@ -1,6 +1,7 @@
 import 'package:cointracker/features/coin_list/ui/widgets/coin_list_card.dart';
 import 'package:cointracker/shared/application/load_coin_list.dart';
 import 'package:cointracker/shared/domain/coin.dart';
+import 'package:cointracker/shared/ui/widgets/custom_circular_progress_indicator.dart';
 import 'package:flutter/material.dart';
 
 class CoinListContent extends StatefulWidget {
@@ -35,7 +36,8 @@ class _CoinListContentState extends State<CoinListContent> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) return const Center(child: CircularProgressIndicator());
+    if (_isLoading)
+      return const Center(child: CustomCircularProgressIndicator());
 
     return RefreshIndicator(
       onRefresh: _refresh,

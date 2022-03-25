@@ -21,50 +21,55 @@ class CoinListCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: DEVICE_SCREEN_HEIGHT * 0.1,
-      child: Card(
-        elevation: 10,
-        color: backgroundColor,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-        child: Padding(
-          padding: EdgeInsets.only(
-            right: DEVICE_SCREEN_WIDTH * 0.05,
-            left: DEVICE_SCREEN_WIDTH * 0.05,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                leadingText,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Row(
-                children: [
-                  Text(
-                    trailingText,
-                    style: TextStyle(
-                      color: hasIncrease ? Colors.green : Colors.red,
-                      fontWeight: FontWeight.bold,
-                    ),
+    return InkWell(
+      onTap: () => Navigator.pushNamed(
+        context,
+        CoinDetailPage.routeID,
+        arguments: coin,
+      ),
+      child: SizedBox(
+        height: DEVICE_SCREEN_HEIGHT * 0.1,
+        child: Card(
+          elevation: 10,
+          color: backgroundColor,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+          child: Padding(
+            padding: EdgeInsets.only(
+              right: DEVICE_SCREEN_WIDTH * 0.05,
+              left: DEVICE_SCREEN_WIDTH * 0.05,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  leadingText,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
                   ),
-                  IconButton(
-                    tooltip: '${coin.symbol} Detail',
-                    onPressed: () => Navigator.pushNamed(
-                        context, CoinDetailPage.routeID,
-                        arguments: coin),
-                    icon: const Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: Colors.white,
+                ),
+                Row(
+                  children: [
+                    Text(
+                      trailingText,
+                      style: TextStyle(
+                        color: hasIncrease ? Colors.green : Colors.red,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  )
-                ],
-              ),
-            ],
+                    IconButton(
+                      tooltip: '${coin.symbol} Detail',
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

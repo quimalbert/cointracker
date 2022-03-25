@@ -6,6 +6,7 @@ import 'package:cointracker/features/profile/ui/widgets/change_password_confirma
 import 'package:cointracker/features/profile/ui/widgets/enable_biometric_confirmation.dart';
 import 'package:cointracker/features/profile/ui/widgets/profile_avatar_button.dart';
 import 'package:cointracker/features/profile/ui/widgets/profile_card.dart';
+import 'package:cointracker/shared/ui/widgets/custom_circular_progress_indicator.dart';
 import 'package:cointracker/shared/ui/widgets/scaffold_snackbar.dart';
 import 'package:cointracker/shared/utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -51,7 +52,7 @@ class _ProfileContentState extends State<ProfileContent> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) return Center(child: CircularProgressIndicator());
+    if (_isLoading) return Center(child: CustomCircularProgressIndicator());
 
     return ListView(
       physics: const BouncingScrollPhysics(),
@@ -199,11 +200,11 @@ class _ProfileContentState extends State<ProfileContent> {
         ),
         Center(
           child: QrImage(
-              data: _userMap["email"],
-              version: QrVersions.auto,
-              size: 150.0,
+            data: _userMap["email"],
+            version: QrVersions.auto,
+            size: 150.0,
           ),
-          ),
+        ),
       ],
     );
   }

@@ -4,6 +4,7 @@ import 'package:cointracker/features/exchange_detail/exchange_detail_page.dart';
 import 'package:cointracker/features/login/ui/login_page.dart';
 import 'package:cointracker/features/portfolio/ui/portfolio_page.dart';
 import 'package:cointracker/features/profile/ui/profile_page.dart';
+import 'package:cointracker/shared/ui/widgets/custom_circular_progress_indicator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,7 @@ class _MyAppState extends State<MyApp> {
           if (snapshot.connectionState == ConnectionState.done) {
             return LoginPage();
           } else {
-            return CircularProgressIndicator();
+            return CustomCircularProgressIndicator();
           }
         },
       ),

@@ -13,13 +13,11 @@ class LoginTextField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: TextField(
-        onChanged: (String value) {
-          onChanged(value);
-        },
+        onChanged: (String value) => onChanged(value),
         style: const TextStyle(color: Colors.white),
         decoration: InputDecoration(
           focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.greenAccent, width: 1.0),
+            borderSide: BorderSide(color: Colors.red, width: 1.0),
           ),
           enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.red, width: 1.0),

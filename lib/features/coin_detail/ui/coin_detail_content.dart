@@ -1,5 +1,6 @@
+import 'package:cointracker/features/coin_detail/ui/widgets/coin_detail_header.dart';
+import 'package:cointracker/features/coin_detail/ui/widgets/coin_detail_stats.dart';
 import 'package:cointracker/shared/domain/coin.dart';
-import 'package:cointracker/shared/ui/styles.dart';
 import 'package:flutter/material.dart';
 
 class CoinDetailContent extends StatefulWidget {
@@ -17,26 +18,23 @@ class _CoinDetailContentState extends State<CoinDetailContent> {
     return ListView(
       physics: const BouncingScrollPhysics(),
       children: [
-        SizedBox(height: DEVICE_SCREEN_HEIGHT * 0.025),
-        Image.network(
-          'https://cryptoicons.org/api/color/${widget.coin.symbol.toLowerCase()}/200',
-          height: DEVICE_SCREEN_HEIGHT * 0.25,
-          width: DEVICE_SCREEN_WIDTH * 0.25,
-          errorBuilder:
-              (BuildContext context, Object exception, StackTrace? stackTrace) {
-            return Image.asset(
-              'assets/images/no-image.png',
-              height: DEVICE_SCREEN_HEIGHT * 0.25,
-              width: DEVICE_SCREEN_WIDTH * 0.25,
-            );
-          },
+        CoinDetailHeader(
+          coinSymbol: widget.coin.symbol.toUpperCase(),
+          coinName: widget.coin.name,
+          coinPrice: widget.coin.price.toStringAsFixed(2),
+          percentageChange24h: widget.coin.priceChange24h,
         ),
-        SizedBox(height: DEVICE_SCREEN_HEIGHT * 0.025),
-        Text(
-          widget.coin.name + ' (' + widget.coin.symbol + ')',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: DEVICE_SCREEN_HEIGHT * 0.05),
-        ),
+        CoinDetailStats(
+          marketRank: widget.coin.marketRank,
+          marketCap: widget.coin.marketCap,
+          fullyDilutedMarketCap: widget.coin.fullyDilutedMarketCap,
+          maxSupply: widget.coin.maxSupply,
+          currentSupply: widget.coin.currentSupply,
+          symbol: widget.coin.symbol,
+          marketCapDominance: widget.coin.marketCapDominance,
+          protocolType: widget.coin.protocolType,
+          volume24h: widget.coin.volume24h,
+        )
       ],
     );
   }

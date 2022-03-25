@@ -4,6 +4,7 @@ import 'package:cointracker/features/home/ui/widgets/swipers/exchange_swiper.dar
 import 'package:cointracker/shared/application/load_coin_list.dart';
 import 'package:cointracker/shared/domain/coin.dart';
 import 'package:cointracker/shared/ui/styles.dart';
+import 'package:cointracker/shared/ui/widgets/custom_circular_progress_indicator.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/domain/exchange.dart';
@@ -34,7 +35,7 @@ class _HomeContentState extends State<HomeContent> {
         _coinList = value;
 
         for (Coin coin in _coinList) {
-          if(coin.priceChange7d > 0){
+          if (coin.priceChange7d > 0) {
             _coinListWinners.add(coin);
           } else {
             _coinListLosers.add(coin);
@@ -49,7 +50,8 @@ class _HomeContentState extends State<HomeContent> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) return Center(child: CircularProgressIndicator());
+    if (_isLoading)
+      return const Center(child: CustomCircularProgressIndicator());
 
     return ListView(
       physics: const BouncingScrollPhysics(),

@@ -5,6 +5,7 @@ import 'package:cointracker/features/login/ui/widgets/login_textfield.dart';
 import 'package:cointracker/features/login/ui/widgets/reset_password.dart';
 import 'package:cointracker/shared/application/read_user_data.dart';
 import 'package:cointracker/shared/ui/styles.dart';
+import 'package:cointracker/shared/ui/widgets/custom_circular_progress_indicator.dart';
 import 'package:cointracker/shared/ui/widgets/scaffold_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class _LoginContentState extends State<LoginContent> {
   bool _isLoading = true;
   late Map<String, dynamic> _userMap;
 
-  final CheckCredentialsUseCase _checkCredentialsUsecase =
+  final CheckCredentialsUseCase _checkCredentialsUseCase =
       _getCheckCredentialsUseCase();
 
   @override
@@ -47,39 +48,42 @@ class _LoginContentState extends State<LoginContent> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) return Center(child: CircularProgressIndicator());
+    if (_isLoading)
+      return const Center(child: CustomCircularProgressIndicator());
 
     return ListView(
       physics: const BouncingScrollPhysics(),
       children: [
-        const SizedBox(height: 40),
+        SizedBox(height: DEVICE_SCREEN_HEIGHT * 0.1),
         Image.asset('assets/images/logo.png', scale: 1.5),
         LoginTextField(
           hintText: 'Email',
-          onChanged: (String value) {
-            _email = value;
-          },
+          onChanged: (String value) => _email = value,
         ),
         LoginTextField(
           hintText: 'Password',
-          onChanged: (String value) {
-            _password = value;
-          },
+          onChanged: (String value) => _password = value,
         ),
+        SizedBox(height: DEVICE_SCREEN_HEIGHT * 0.05),
         Padding(
-          padding: const EdgeInsets.only(top: 10, right: 75, left: 75),
+          padding: EdgeInsets.only(
+            right: DEVICE_SCREEN_WIDTH * 0.2,
+            left: DEVICE_SCREEN_WIDTH * 0.2,
+          ),
           child: ElevatedButton(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.red)),
             child: const Text('Login'),
             onPressed: () async {
               if (!(_email.isNotEmpty && _password.isNotEmpty)) {
                 scaffoldSnackBar(
                   context: context,
-                  text: 'Email and Password can' + "'" + 't be empty',
+                  text: "Email and Password can't be empty",
                   isError: true,
                 );
                 return;
               }
-              _isLoginCorrect = await _checkCredentialsUsecase(
+              _isLoginCorrect = await _checkCredentialsUseCase(
                   email: _email, password: _password);
 
               if (_isLoginCorrect) {
@@ -101,11 +105,15 @@ class _LoginContentState extends State<LoginContent> {
             },
           ),
         ),
+        SizedBox(height: DEVICE_SCREEN_HEIGHT * 0.05),
         Padding(
-          padding: EdgeInsets.only(top: 10, right: 100, left: 100),
+          padding: EdgeInsets.only(
+            right: DEVICE_SCREEN_WIDTH * 0.1,
+            left: DEVICE_SCREEN_WIDTH * 0.1,
+          ),
           child: TextButton(
             child: const Text(
-              "Forgotten password?",
+              'Forgotten password?',
               style: TextStyle(
                   color: Colors.white,
                   decoration: TextDecoration.underline,

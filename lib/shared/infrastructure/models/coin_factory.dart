@@ -14,7 +14,8 @@ class CoinFactory {
         protocolType: coinJson['tags'].length == 2 ? coinJson['tags'][1] : null,
         marketRank: coinJson['cmc_rank'],
         marketCap: coinJson['quote']['USD']['market_cap'],
-        marketCapDominance: coinJson['quote']['USD']['market_cap_dominance'],
+        marketCapDominance:
+            coinJson['quote']['USD']['market_cap_dominance'].toDouble(),
         fullyDilutedMarketCap: double.parse(
             coinJson['quote']['USD']['fully_diluted_market_cap'].toString()),
         volume24h: coinJson['quote']['USD']['volume_24h'],

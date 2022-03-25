@@ -9,9 +9,7 @@ class GeneralTopAppBar extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 10,
-      flexibleSpace: Image.asset(
-        'assets/images/logo.png',
-      ),
+      flexibleSpace: Image.asset('assets/images/logo.png'),
       backgroundColor: backgroundColor,
     );
   }
