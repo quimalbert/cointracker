@@ -46,7 +46,7 @@ class PhotoRemoteDataSource {
       );
       return File(pickedFile!.path);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 

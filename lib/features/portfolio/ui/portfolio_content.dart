@@ -14,7 +14,7 @@ class _PortfolioContentState extends State<PortfolioContent> {
       physics: const BouncingScrollPhysics(),
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
           child: RaisedButton(
               color: Colors.blue,
               textColor: Colors.white,

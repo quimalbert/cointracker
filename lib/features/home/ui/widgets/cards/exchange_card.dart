@@ -41,7 +41,7 @@ class ExchangeCard extends StatelessWidget {
                     fit: BoxFit.fill,
                   ),
                 )),
-            Container(
+            SizedBox(
               height: 35,
               child: Text(exchange.name,
                   textAlign: TextAlign.center,

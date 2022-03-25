@@ -31,8 +31,8 @@ class _ProfileContentState extends State<ProfileContent> {
   File? imgUrl;
   late Map<String, dynamic> _userMap;
 
-  SelectPhotoUseCase _selectPhotoUseCase = _getSelectPhotoUseCase();
-  TakePhotoUseCase _takePhotoUseCase = _getTakePhotoUseCase();
+  final SelectPhotoUseCase _selectPhotoUseCase = _getSelectPhotoUseCase();
+  final TakePhotoUseCase _takePhotoUseCase = _getTakePhotoUseCase();
   FirebaseAuth auth = FirebaseAuth.instance;
 
   bool _isLoading = true;
@@ -54,7 +54,9 @@ class _ProfileContentState extends State<ProfileContent> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) return Center(child: CustomCircularProgressIndicator());
+    if (_isLoading) {
+      return const Center(child: CustomCircularProgressIndicator());
+    }
 
     return ListView(
       physics: const BouncingScrollPhysics(),
@@ -78,7 +80,7 @@ class _ProfileContentState extends State<ProfileContent> {
                         children: [
                           AvatarButton(
                             buttonText: "Select from Gallery",
-                            buttonIcon: Icon(
+                            buttonIcon: const Icon(
                               Icons.photo,
                               color: Colors.white,
                               size: 50.0,
@@ -102,7 +104,7 @@ class _ProfileContentState extends State<ProfileContent> {
                           ),
                           AvatarButton(
                             buttonText: "Take a beautiful Photo",
-                            buttonIcon: Icon(
+                            buttonIcon: const Icon(
                               Icons.camera_alt,
                               color: Colors.white,
                               size: 50.0,
@@ -149,7 +151,7 @@ class _ProfileContentState extends State<ProfileContent> {
             auth.sendPasswordResetEmail(email: _userMap["email"]!);
             showDialog(
                 context: context,
-                builder: (context) => ChangePasswordConfirmation());
+                builder: (context) => const ChangePasswordConfirmation());
             print("Changed password");
           },
         ),

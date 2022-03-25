@@ -1,6 +1,5 @@
 import 'package:cointracker/shared/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class EnableBiometricConfirmation extends StatelessWidget {
   final String textMessage, titleText;
@@ -41,29 +40,25 @@ dialogContent(BuildContext context, String textMessage, String titleText) {
           children: <Widget>[
             Text(
               titleText,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.w700,
               ),
             ),
-            SizedBox(
-              height: 24.0,
-            ),
+            const SizedBox(height: 24.0),
             Text(
               textMessage,
-              style: TextStyle(fontSize: 16.0),
+              style: const TextStyle(fontSize: 16.0),
               textAlign: TextAlign.center,
             ),
-            SizedBox(
-              height: 24.0,
-            ),
+            const SizedBox(height: 24.0),
             Align(
               alignment: Alignment.bottomRight,
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text("Okay!"),
+                child: const Text('Okay!'),
               ),
             )
           ],

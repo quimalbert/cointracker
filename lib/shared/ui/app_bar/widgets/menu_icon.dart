@@ -15,7 +15,7 @@ class MenuIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       tooltip: tooltip,
       iconSize: 50,
       color: Colors.white,

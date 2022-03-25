@@ -1,7 +1,5 @@
 import 'package:cointracker/shared/utils/constants.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 class AvatarButton extends StatelessWidget {
   final String buttonText;
@@ -21,9 +19,9 @@ class AvatarButton extends StatelessWidget {
       padding: const EdgeInsets.only(top: 30, right: 30, bottom: 20, left: 30),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: Color.fromRGBO(25, 25, 25, 1),
-          padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-          textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          primary: const Color.fromRGBO(25, 25, 25, 1),
+          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+          textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           elevation: defaultElevation,
         ),
         onPressed: onPressed,

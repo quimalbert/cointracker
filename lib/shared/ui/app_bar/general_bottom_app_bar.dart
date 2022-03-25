@@ -22,8 +22,9 @@ class GeneralBottomAppBar extends StatelessWidget {
             iconData: Icons.home,
             tooltip: 'Home',
             onPressed: () {
-              if (ModalRoute.of(context)!.settings.name != HomePage.routeID)
+              if (ModalRoute.of(context)!.settings.name != HomePage.routeID) {
                 Navigator.pushReplacementNamed(context, HomePage.routeID);
+              }
             },
           ),
           MenuIcon(
@@ -31,8 +32,9 @@ class GeneralBottomAppBar extends StatelessWidget {
               tooltip: 'Coin List',
               onPressed: () {
                 if (ModalRoute.of(context)!.settings.name !=
-                    CoinListPage.routeID)
+                    CoinListPage.routeID) {
                   Navigator.pushReplacementNamed(context, CoinListPage.routeID);
+                }
               }),
           MenuIcon(
               iconData: Icons.pie_chart_sharp,
@@ -48,8 +50,10 @@ class GeneralBottomAppBar extends StatelessWidget {
             iconData: Icons.person,
             tooltip: 'Profile',
             onPressed: () {
-              if (ModalRoute.of(context)!.settings.name != ProfilePage.routeID)
+              if (ModalRoute.of(context)!.settings.name !=
+                  ProfilePage.routeID) {
                 Navigator.pushReplacementNamed(context, ProfilePage.routeID);
+              }
             },
           ),
         ],

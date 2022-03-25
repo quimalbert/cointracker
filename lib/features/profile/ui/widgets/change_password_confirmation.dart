@@ -1,7 +1,6 @@
 import 'package:cointracker/shared/utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ChangePasswordConfirmation extends StatelessWidget {
   const ChangePasswordConfirmation({Key? key}) : super(key: key);
@@ -28,8 +27,9 @@ dialogContent(BuildContext context) {
   return Stack(
     children: <Widget>[
       Container(
-        padding: EdgeInsets.only(top: 100, bottom: 16, right: 16, left: 16),
-        margin: EdgeInsets.only(top: 16),
+        padding:
+            const EdgeInsets.only(top: 100, bottom: 16, right: 16, left: 16),
+        margin: const EdgeInsets.only(top: 16),
         decoration: BoxDecoration(
             color: Colors.white,
             shape: BoxShape.rectangle,
@@ -43,39 +43,35 @@ dialogContent(BuildContext context) {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text(
+            const Text(
               "Check your email!",
               style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.w700,
               ),
             ),
-            SizedBox(
-              height: 24.0,
-            ),
+            const SizedBox(height: 24.0),
             Text(
               "We have sent you an email to: " +
                   _email! +
                   ". Check your inbox, and follow the steps to reset your password.",
-              style: TextStyle(fontSize: 16.0),
+              style: const TextStyle(fontSize: 16.0),
               textAlign: TextAlign.center,
             ),
-            SizedBox(
-              height: 24.0,
-            ),
+            const SizedBox(height: 24.0),
             Align(
               alignment: Alignment.bottomRight,
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text("Okay!"),
+                child: const Text("Okay!"),
               ),
             )
           ],
         ),
       ),
-      Positioned(
+      const Positioned(
         top: 0,
         left: 16,
         right: 16,

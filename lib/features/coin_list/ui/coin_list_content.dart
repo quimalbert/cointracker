@@ -36,8 +36,9 @@ class _CoinListContentState extends State<CoinListContent> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading)
+    if (_isLoading) {
       return const Center(child: CustomCircularProgressIndicator());
+    }
 
     return RefreshIndicator(
       onRefresh: _refresh,

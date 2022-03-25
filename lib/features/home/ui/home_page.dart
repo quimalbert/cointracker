@@ -7,7 +7,7 @@ import 'home_content.dart';
 class HomePage extends StatelessWidget {
   static const String routeID = '/home';
 
-  //const LoginPage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

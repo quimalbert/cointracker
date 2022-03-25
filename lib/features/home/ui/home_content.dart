@@ -51,8 +51,9 @@ class _HomeContentState extends State<HomeContent> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading)
+    if (_isLoading) {
       return const Center(child: CustomCircularProgressIndicator());
+    }
 
     return ListView(
       physics: const BouncingScrollPhysics(),

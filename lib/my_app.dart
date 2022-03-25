@@ -25,7 +25,7 @@ Future firebaseInitialize() async {
 }
 
 Future firebaseUser() async {
-  final user = await FirebaseAuth.instance.currentUser?.email;
+  final String? user = FirebaseAuth.instance.currentUser?.email;
   return user;
 }
 
@@ -38,16 +38,16 @@ class _MyAppState extends State<MyApp> {
         future: firebaseInitialize(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return LoginPage();
+            return const LoginPage();
           } else {
-            return CustomCircularProgressIndicator();
+            return const CustomCircularProgressIndicator();
           }
         },
       ),
       //initialRoute: LoginPage.routeID,
       routes: {
         //LoginPage.routeID: (context) => LoginPage(),
-        HomePage.routeID: (context) => HomePage(),
+        HomePage.routeID: (context) => const HomePage(),
         CoinListPage.routeID: (context) => const CoinListPage(),
         PortfolioPage.routeID: (context) => const PortfolioPage(),
         ProfilePage.routeID: (context) => const ProfilePage(),

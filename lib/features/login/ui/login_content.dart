@@ -48,8 +48,9 @@ class _LoginContentState extends State<LoginContent> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading)
+    if (_isLoading) {
       return const Center(child: CustomCircularProgressIndicator());
+    }
 
     return ListView(
       physics: const BouncingScrollPhysics(),
@@ -136,7 +137,7 @@ class _LoginContentState extends State<LoginContent> {
             _userMap["isBiometricEnabled"])
           InkWell(
             onTap: openBiometricLogin,
-            child: Icon(
+            child: const Icon(
               Icons.fingerprint,
               color: Colors.grey,
               size: 80.0,

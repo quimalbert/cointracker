@@ -1,6 +1,5 @@
 import 'package:cointracker/features/login/ui/widgets/login_textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../shared/utils/constants.dart';
@@ -37,7 +36,7 @@ class _ResetPassPageState extends State<ResetPassPage> {
               ),
             ),
             const Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0),
               child: Text(
                 "We will send you an email with the next steps required to reset your password.",
                 style: TextStyle(
@@ -54,11 +53,9 @@ class _ResetPassPageState extends State<ResetPassPage> {
               },
             ),
             Padding(
-              padding: EdgeInsets.only(top: 10, right: 75, left: 75),
+              padding: const EdgeInsets.only(top: 10, right: 75, left: 75),
               child: ElevatedButton(
-                  child: Text(
-                    'Send reset code',
-                  ),
+                  child: const Text('Send reset code'),
                   onPressed: () {
                     if (_resetEmailInput == null) {
                     } else {

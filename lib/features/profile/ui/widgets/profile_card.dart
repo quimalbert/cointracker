@@ -16,12 +16,12 @@ class ProfileCard extends StatelessWidget {
       onTap: onPressed,
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        margin: EdgeInsets.all(5),
+        margin: const EdgeInsets.all(5),
         elevation: 8,
         child: Column(
           children: <Widget>[
             ListTile(
-              contentPadding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+              contentPadding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
               title: Text(
                 buttonText,
                 textAlign: TextAlign.center,
