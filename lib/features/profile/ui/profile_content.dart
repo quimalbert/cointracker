@@ -20,6 +20,7 @@ import '../application/take_photo.dart';
 
 class ProfileContent extends StatefulWidget {
   const ProfileContent({Key? key}) : super(key: key);
+
   @override
   State<ProfileContent> createState() => _ProfileContentState();
 }
@@ -37,6 +38,7 @@ class _ProfileContentState extends State<ProfileContent> {
   bool _isLoading = true;
 
   late bool _isBiometricEnabled;
+
   @override
   void initState() {
     setState(() {

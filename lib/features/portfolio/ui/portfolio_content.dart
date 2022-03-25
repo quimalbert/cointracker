@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 class PortfolioContent extends StatefulWidget {
   const PortfolioContent({Key? key}) : super(key: key);
+
   @override
   State<PortfolioContent> createState() => _PortfolioContentState();
 }
 
 class _PortfolioContentState extends State<PortfolioContent> {
-
   @override
   Widget build(BuildContext context) {
     return ListView(
       physics: const BouncingScrollPhysics(),
-      children:  <Widget>[
+      children: <Widget>[
         Padding(
           padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
           child: RaisedButton(
@@ -23,11 +22,9 @@ class _PortfolioContentState extends State<PortfolioContent> {
               onPressed: () {
                 //Navigator.pushNamed(context, QRPage.routeID);
               },
-              child: const Text('GENERATE QR CODE')
-          ),
+              child: const Text('GENERATE QR CODE')),
         ),
       ],
     );
   }
 }
-

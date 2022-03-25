@@ -13,13 +13,13 @@ class User with ChangeNotifier {
     required this.email,
   });
 
-  //factory User.fromFirestore(DocumentSnapshot userDoc) {
-  //  Map userData = userDoc.data;
+//factory User.fromFirestore(DocumentSnapshot userDoc) {
+//  Map userData = userDoc.data;
 //    return User(
-  //    id: userDoc.documentID,
-  //  displayName: userData['displayName'],
-  // photoUrl: userData['photoUrl'],
-  //email: userData['email'],
-  //);
-  //}
+//    id: userDoc.documentID,
+//  displayName: userData['displayName'],
+// photoUrl: userData['photoUrl'],
+//email: userData['email'],
+//);
+//}
 }

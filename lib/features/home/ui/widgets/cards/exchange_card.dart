@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class ExchangeCard extends StatelessWidget {
   final Exchange exchange;
+
   const ExchangeCard({
     Key? key,
     required this.exchange,
@@ -40,15 +41,13 @@ class ExchangeCard extends StatelessWidget {
                     fit: BoxFit.fill,
                   ),
                 )),
-              Container(
-                height: 35,
-                child: Text(
-                    exchange.name,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontWeight: FontWeight.bold)
-                ),
-              ),
-              const SizedBox(height: 5.0),
+            Container(
+              height: 35,
+              child: Text(exchange.name,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
+            ),
+            const SizedBox(height: 5.0),
           ],
         ),
       ),

@@ -11,6 +11,7 @@ import '../../../shared/domain/exchange.dart';
 
 class HomeContent extends StatefulWidget {
   const HomeContent({Key? key}) : super(key: key);
+
   @override
   State<HomeContent> createState() => _HomeContentState();
 }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class CoinCard extends StatelessWidget {
   final Coin coin;
   final bool isWinner;
+
   const CoinCard({
     Key? key,
     required this.isWinner,
@@ -41,16 +42,12 @@ class CoinCard extends StatelessWidget {
                     fit: BoxFit.fill,
                   ),
                 )),
-            Text(
-              coin.name,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontWeight: FontWeight.bold)
-            ),
+            Text(coin.name,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontWeight: FontWeight.bold)),
             Padding(
-                padding:  const EdgeInsets.only(top: 5),
-                child: Text(
-                    '\$${coin.price.toStringAsFixed(3)}'
-                ),
+              padding: const EdgeInsets.only(top: 5),
+              child: Text('\$${coin.price.toStringAsFixed(3)}'),
             ),
             const SizedBox(height: 5.0),
           ],

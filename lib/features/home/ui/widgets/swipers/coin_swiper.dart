@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 class CoinSwiper extends StatelessWidget {
   final bool isWinner;
   final List<Coin> coinList;
+
   const CoinSwiper({Key? key, required this.isWinner, required this.coinList})
       : super(key: key);
 

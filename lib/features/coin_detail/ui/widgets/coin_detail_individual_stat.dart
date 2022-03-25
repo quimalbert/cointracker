@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class CoinDetailIndividualStat extends StatelessWidget {
   final String title;
   final String text;
+
   const CoinDetailIndividualStat({
     Key? key,
     required this.title,

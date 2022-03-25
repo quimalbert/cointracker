@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 
 class EnableBiometricConfirmation extends StatelessWidget {
   final String textMessage, titleText;
+
   const EnableBiometricConfirmation(
       {required this.textMessage, required this.titleText, Key? key})
       : super(key: key);

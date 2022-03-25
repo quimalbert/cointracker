@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 class ExchangeSwiper extends StatelessWidget {
   final List<Exchange> exchangeList;
+
   const ExchangeSwiper({Key? key, required this.exchangeList})
       : super(key: key);
 
@@ -19,16 +20,15 @@ class ExchangeSwiper extends StatelessWidget {
       child: SizedBox(
         height: DEVICE_SCREEN_HEIGHT * 0.2,
         child: PageView.builder(
-          pageSnapping: false,
-          physics: const BouncingScrollPhysics(),
-          controller: PageController(initialPage: 1, viewportFraction: 0.3),
-          itemCount: exchangeList.length,
+            pageSnapping: false,
+            physics: const BouncingScrollPhysics(),
+            controller: PageController(initialPage: 1, viewportFraction: 0.3),
+            itemCount: exchangeList.length,
             itemBuilder: (context, index) => Column(
-              children: [
-                ExchangeCard(exchange: exchangeList.elementAt(index)),
-              ],
-            )
-        ),
+                  children: [
+                    ExchangeCard(exchange: exchangeList.elementAt(index)),
+                  ],
+                )),
       ),
     );
   }

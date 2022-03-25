@@ -7,6 +7,7 @@ class WriteUserDataUseCase {
       required bool isBiometricEnabled}) async {
     await LoadUserRemoteDataSource().writeUserData(
         email: email,
-        pictureURL: pictureURL, isBiometricEnabled: isBiometricEnabled);
+        pictureURL: pictureURL,
+        isBiometricEnabled: isBiometricEnabled);
   }
 }

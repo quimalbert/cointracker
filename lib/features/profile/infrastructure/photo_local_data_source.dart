@@ -8,6 +8,7 @@ class PhotoRemoteDataSource {
       'cloudinary://235117647476446:0vyTICgQX0H5wFTT706Og4XQhWY@atlantis-it';
   final cloudinary =
       CloudinaryPublic(CLOUDINARY_URL, 'UPLOAD_PRESET', cache: false);
+
   //String hola = "https://api.cloudinary.com/v1_1/atlantis-it/auto/upload";
   Future<dynamic> _uploadPhoto(File? image, bool isTake) async {
     if (isTake)
