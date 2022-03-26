@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cointracker/shared/domain/database.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+
+import '../../../shared/domain/database.dart';
 
 class PortfolioContent extends StatefulWidget {
   const PortfolioContent({Key? key}) : super(key: key);
@@ -81,3 +83,4 @@ class _PortfolioContentState extends State<PortfolioContent> {
     );
   }
 }
+

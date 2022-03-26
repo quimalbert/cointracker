@@ -19,6 +19,7 @@ dependencies:
   google_sign_in: ^5.0.3
   url_launcher: ^6.0.20
   qr_flutter: ^4.0.0
+  qr_code_scanner: ^0.7.0
 
   #Image Selector profile
   image_picker: ^0.8.4+9
