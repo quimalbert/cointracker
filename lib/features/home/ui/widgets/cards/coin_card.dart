@@ -1,5 +1,6 @@
 import 'package:cointracker/features/coin_detail/ui/coin_detail_page.dart';
 import 'package:cointracker/shared/domain/coin.dart';
+import 'package:cointracker/shared/ui/styles.dart';
 import 'package:flutter/material.dart';
 
 class CoinCard extends StatelessWidget {
@@ -37,9 +38,15 @@ class CoinCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.0),
                   child: Image.asset(
                     'assets/coin_logos/${coin.symbol}.png',
-                    height: 100.0,
-                    width: 100.0,
+                    height: DEVICE_SCREEN_HEIGHT * 0.2,
+                    width: DEVICE_SCREEN_WIDTH * 0.2,
                     fit: BoxFit.fill,
+                    errorBuilder: (BuildContext context, Object exception,
+                        StackTrace? stackTrace) {
+                      // If error builder draws i want the container below colour to become transparent...
+                      // how  do i do this?
+                      return Image.asset('assets/images/no-image.png');
+                    },
                   ),
                 )),
             Text(coin.name,
