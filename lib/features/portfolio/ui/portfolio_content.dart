@@ -9,24 +9,34 @@ class PortfolioContent extends StatefulWidget {
 }
 
 class _PortfolioContentState extends State<PortfolioContent> {
+  _PortfolioContentState();
   late DatabaseService dbs;
   String? _email, _password;
   late bool _isLoginCorrect;
-  //final Stream<QuerySnapshot> portfolioData;
+  String email = "joanangel@gmail.com";
 
+  //dbs.getUserPortfolio('email');
+  //final Stream<QuerySnapshot> portfolioData;
   var query = FirebaseFirestore.instance
       .collection('portfolio')
       .doc("arnaualaman@gmail.com")
       .get();
+
+  /*
   var query2 = FirebaseFirestore.instance
       .collection('portfolio')
       .doc("arnaualaman@gmail.com")
       .collection("manolo")
       .get();
+   */
+
   void initState() {}
 
   @override
-  Widget build(BuildContext context) {
+  Future<Widget> build(BuildContext context) async {
+    DatabaseService dbs = new DatabaseService();
+    List<Map<String, dynamic>> _portfolio =
+        await dbs.getUserPortfolio("joanangel@gmail.com");
     return ListView(
       physics: const BouncingScrollPhysics(),
       children: [
@@ -39,7 +49,7 @@ class _PortfolioContentState extends State<PortfolioContent> {
                   child: CircularProgressIndicator(),
                 );
               } else {
-                return Text(snapshot.data["description"]);
+                return Text("");
               }
             }
             return Text("");

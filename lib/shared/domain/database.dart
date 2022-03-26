@@ -1,34 +1,34 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseService {
-  DatabaseService(
-      {description,
-      coin_buy_price,
-      coin_buy_date,
-      coin_Id,
-      coin_Amount,
-      userEmail,
-      createDate,
-      portfolio_name});
   final CollectionReference brewsCollection =
       FirebaseFirestore.instance.collection('portfolio');
 
-  Future getUserPortfolio(String email) async {
-    late Map<String, dynamic> prova;
-
-    //FirebaseFirestore.instance.collection('portfolio').snapshots().map(query) => query.docs.map((doc) => doc.data()['test']);
-
-    final _ref = FirebaseFirestore.instance
+  Future<List<Map<String, dynamic>>> getUserPortfolio(String email) async {
+    var query = await FirebaseFirestore.instance
         .collection('portfolio')
-        .snapshots()
-        .map((query) => query.docs
-            .map((doc) => doc
-                .data()['portafolio']
-                .map((testDoc) => DatabaseService.fromDoc(testDoc)))
-            .toList());
-    print("hola");
+        .doc(email)
+        .get();
+    List<Map<String, dynamic?>> _portfolio = [
+      /*{
+        "symbol": "btc",
+        "quantity": 1,
+        "buyPrice": 42123.23,
+        "buyDate": 1236217933,
+      },
+      {
+        "symbol": "eth",
+        "quantity": 1,
+        "buyPrice": 3213.54,
+        "buyDate": 1236217933,
+      },*/
+    ];
+    query.data()?.values.forEach((element) {
+      _portfolio.add(element);
+    });
+    return _portfolio;
   }
-
+/*
   factory DatabaseService.fromDoc(DocumentSnapshot<Map<String, dynamic>> doc) {
     final data = doc.data()!;
     return DatabaseService(
@@ -44,4 +44,6 @@ class DatabaseService {
     );
     // calendarEvents: data['calendarEvents']);
   }
+}
+*/
 }
