@@ -65,17 +65,13 @@ class _ExchangeDetailContentState extends State<ExchangeDetailContent> {
                 fontSize: 15.0,
               ),
             ),
-            if (_exchangeDetail.isNotEmpty &&
-                _exchangeDetail["data"][widget.exchange.name.toString()]
-                        ["weekly_visits"] !=
-                    null)
-              Padding(
-                padding: const EdgeInsets.only(top: 30.0),
-                //apply padding to all four sides
-                child: Text('Weekly visits: ' +
-                    _exchangeDetail["data"]["binance"]["weekly_visits"]
-                        .toString()),
-              ),
+            Padding(
+              padding: const EdgeInsets.only(top: 30.0),
+              //apply padding to all four sides
+              child: Text('Weekly visits: ' +
+                  _exchangeDetail["data"]["binance"]["weekly_visits"]
+                      .toString()),
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 30.0),
               //apply padding to all four sides
