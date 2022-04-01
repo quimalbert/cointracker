@@ -33,10 +33,8 @@ class _PortfolioContentState extends State<PortfolioContent> {
   void initState() {}
 
   @override
-  Future<Widget> build(BuildContext context) async {
+  Widget build(BuildContext context) {
     DatabaseService dbs = new DatabaseService();
-    List<Map<String, dynamic>> _portfolio =
-        await dbs.getUserPortfolio("joanangel@gmail.com");
     return ListView(
       physics: const BouncingScrollPhysics(),
       children: [

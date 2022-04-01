@@ -19,22 +19,29 @@ class _ExchangeDetailContentState extends State<ExchangeDetailContent> {
 
   late Map<String, dynamic> _exchangeDetail;
   bool _isLoading = true;
-
   @override
   void initState() {
-    _isLoading = false;
-
+    setState(() {
+      _isLoading = true;
+    });
     _loadExchangeDetailDataSource
         .getExchangeDetail(widget.exchange.id)
         .then((value) {
       _exchangeDetail = value;
+      setState(() {
+        _isLoading = false;
+      });
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) return SafeArea(child: CircularProgressIndicator());
+    if (_isLoading)
+      return SafeArea(
+          child: Center(
+        child: CircularProgressIndicator(),
+      ));
 
     return SafeArea(
       child: Scaffold(
@@ -58,6 +65,17 @@ class _ExchangeDetailContentState extends State<ExchangeDetailContent> {
                 fontSize: 15.0,
               ),
             ),
+            if (_exchangeDetail.isNotEmpty &&
+                _exchangeDetail["data"][widget.exchange.name.toString()]
+                        ["weekly_visits"] !=
+                    null)
+              Padding(
+                padding: const EdgeInsets.only(top: 30.0),
+                //apply padding to all four sides
+                child: Text('Weekly visits: ' +
+                    _exchangeDetail["data"]["binance"]["weekly_visits"]
+                        .toString()),
+              ),
             Padding(
               padding: const EdgeInsets.only(top: 30.0),
               //apply padding to all four sides
