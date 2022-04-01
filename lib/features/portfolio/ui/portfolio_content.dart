@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cointracker/shared/ui/widgets/custom_circular_progress_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../../shared/domain/database.dart';
 
@@ -32,8 +32,6 @@ class _PortfolioContentState extends State<PortfolioContent> {
       .get();
    */
 
-  void initState() {}
-
   @override
   Widget build(BuildContext context) {
     DatabaseService dbs = new DatabaseService();
@@ -45,9 +43,7 @@ class _PortfolioContentState extends State<PortfolioContent> {
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
+                return Center(child: CustomCircularProgressIndicator());
               } else {
                 return Text("");
               }
@@ -83,4 +79,3 @@ class _PortfolioContentState extends State<PortfolioContent> {
     );
   }
 }
-
