@@ -60,7 +60,13 @@ class CoinListCard extends StatelessWidget {
                     ),
                     IconButton(
                       tooltip: '${coin.symbol} Detail',
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                          CoinDetailPage.routeID,
+                          arguments: coin,
+                        );
+                      },
                       icon: const Icon(
                         Icons.arrow_forward_ios_rounded,
                         color: Colors.white,

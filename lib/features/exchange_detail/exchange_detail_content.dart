@@ -68,13 +68,6 @@ class _ExchangeDetailContentState extends State<ExchangeDetailContent> {
             Padding(
               padding: const EdgeInsets.only(top: 30.0),
               //apply padding to all four sides
-              child: Text('Weekly visits: ' +
-                  _exchangeDetail["data"]["binance"]["weekly_visits"]
-                      .toString()),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 30.0),
-              //apply padding to all four sides
               child: Text('Country: ' + widget.exchange.country),
             ),
             ElevatedButton(

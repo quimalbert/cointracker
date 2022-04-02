@@ -27,7 +27,7 @@ class _PortfolioContentState extends State<PortfolioContent> {
   late TooltipBehavior _tooltip;
 
   final NumberFormat _formatCurrency = NumberFormat.compactSimpleCurrency();
-
+  late bool _test;
   @override
   void initState() {
     setState(() => _isLoading = true);
@@ -35,6 +35,7 @@ class _PortfolioContentState extends State<PortfolioContent> {
     DatabaseService().getUserPortfolio().then((value) {
       _portfolioMap = value;
 
+      DatabaseService().addCoinToPortfolio().then((value) => _test = value);
       CoinListRemoteDataSource().getCoinList().then((value) {
         _coinList = value;
 
