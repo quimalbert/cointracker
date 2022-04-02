@@ -1,6 +1,5 @@
 import 'package:cointracker/features/portfolio/ui/portfolio_coin_add_content.dart';
 import 'package:cointracker/features/portfolio/ui/portfolio_page.dart';
-import 'package:cointracker/shared/domain/coin.dart';
 import 'package:cointracker/shared/ui/app_bar/general_top_app_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -11,8 +10,7 @@ class PortfolioCoinAddPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Coin> _arguments =
-        ModalRoute.of(context)!.settings.arguments as List<Coin>;
+    final List _arguments = ModalRoute.of(context)!.settings.arguments as List;
     return WillPopScope(
       onWillPop: () async {
         Navigator.of(context).pushNamedAndRemoveUntil(
@@ -22,7 +20,10 @@ class PortfolioCoinAddPage extends StatelessWidget {
       child: SafeArea(
         child: Scaffold(
           backgroundColor: Colors.white,
-          body: PortfolioCoinAddContent(coinList: _arguments),
+          body: PortfolioCoinAddContent(
+            coinList: _arguments[0],
+            portfolioMap: _arguments[1],
+          ),
           appBar: const GeneralTopAppBar(
             showBackButton: true,
             pushRoute: PortfolioPage.routeID,

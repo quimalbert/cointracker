@@ -150,7 +150,7 @@ class _PortfolioContentState extends State<PortfolioContent> {
                   Navigator.pushNamed(
                     context,
                     PortfolioCoinAddPage.routeID,
-                    arguments: _coinList,
+                    arguments: [_coinList, _portfolioMap],
                   );
                 },
                 icon: const Icon(
@@ -239,6 +239,20 @@ class _PortfolioContentState extends State<PortfolioContent> {
                 color: backgroundColor,
               ),
             ),
+            IconButton(
+              tooltip: 'Add new Coin',
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  PortfolioCoinAddPage.routeID,
+                  arguments: [_coinList, _portfolioMap],
+                );
+              },
+              icon: const Icon(
+                Icons.add,
+                size: 32,
+              ),
+            ),
             SizedBox(height: DEVICE_SCREEN_HEIGHT * 0.01),
             ListView.builder(
               physics: const BouncingScrollPhysics(),
@@ -324,6 +338,7 @@ class _PortfolioContentState extends State<PortfolioContent> {
       content: QrImage(
         data: jsonEncode([_email, _portfolioMap]),
         version: QrVersions.auto,
+        size: 250,
       ),
     );
 
