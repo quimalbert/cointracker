@@ -19,7 +19,8 @@ class CoinFactory {
         fullyDilutedMarketCap: double.parse(
             coinJson['quote']['USD']['fully_diluted_market_cap'].toString()),
         volume24h: coinJson['quote']['USD']['volume_24h'],
-        volumeChange24h: coinJson['quote']['USD']['volume_change_24h'],
+        volumeChange24h: double.parse(
+            coinJson['quote']['USD']['volume_change_24h'].toString()),
         price: coinJson['quote']['USD']['price'],
         priceChange1h: coinJson['quote']['USD']['percent_change_1h'],
         priceChange24h: coinJson['quote']['USD']['percent_change_24h'],

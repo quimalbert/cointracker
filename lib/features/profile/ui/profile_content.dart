@@ -10,7 +10,6 @@ import 'package:cointracker/shared/ui/widgets/custom_circular_progress_indicator
 import 'package:cointracker/shared/ui/widgets/scaffold_snackbar.dart';
 import 'package:cointracker/shared/utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
