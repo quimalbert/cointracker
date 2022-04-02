@@ -6,17 +6,16 @@ class DatabaseService {
   final CollectionReference brewsCollection =
       FirebaseFirestore.instance.collection('portfolio');
 
-  Future<bool> addCoinToPortfolio(
+  Future<void> addCoinToPortfolio(
       Map<String, Map<String, dynamic>> _coinMap) async {
     Map<String, dynamic> _userMap = {};
     _userMap = await ReadUserDataUseCase().call();
     String _email = _userMap['email'];
-    DateTime now = new DateTime.now();
-    var tro = await FirebaseFirestore.instance
+
+    await FirebaseFirestore.instance
         .collection('portfolio')
         .doc(_email)
         .set(_coinMap);
-    return true;
   }
 
   Future<Map<String, dynamic>> getUserPortfolio() async {

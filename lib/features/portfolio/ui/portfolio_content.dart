@@ -35,7 +35,20 @@ class _PortfolioContentState extends State<PortfolioContent> {
     DatabaseService().getUserPortfolio().then((value) {
       _portfolioMap = value;
 
-      DatabaseService().addCoinToPortfolio().then((value) => _test = value);
+      DateTime now = new DateTime.now();
+      Map<String, Map<String, dynamic>> _coinMap = {
+        "btc": {
+          "buyDate": now,
+          "buyPrice": 100,
+          "quantity": 1,
+        },
+        "eth": {
+          "buyDate": now,
+          "buyPrice": 100,
+          "quantity": 1,
+        },
+      };
+      DatabaseService().addCoinToPortfolio(_coinMap);
       CoinListRemoteDataSource().getCoinList().then((value) {
         _coinList = value;
 

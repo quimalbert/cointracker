@@ -88,16 +88,14 @@ class _LoginContentState extends State<LoginContent> {
                   email: _email, password: _password);
 
               //todo no fa res
-              if (_isLoginCorrect) {
-                UserCredential userCredential = await FirebaseAuth.instance
-                    .signInWithEmailAndPassword(
-                        email: _email, password: _password);
+              UserCredential userCredential = await FirebaseAuth.instance
+                  .signInWithEmailAndPassword(
+                      email: _email, password: _password);
 
-                if (userCredential != null) {
-                  WriteUserDataUseCase().call(
-                      email: _email, pictureURL: '', isBiometricEnabled: false);
-                  Navigator.pushReplacementNamed(context, HomePage.routeID);
-                }
+              if (userCredential != null) {
+                WriteUserDataUseCase().call(
+                    email: _email, pictureURL: '', isBiometricEnabled: false);
+                Navigator.pushReplacementNamed(context, HomePage.routeID);
               } else {
                 scaffoldSnackBar(
                   context: context,
