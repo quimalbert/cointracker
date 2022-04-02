@@ -3,7 +3,13 @@ import 'package:cointracker/shared/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class GeneralTopAppBar extends StatelessWidget with PreferredSizeWidget {
-  const GeneralTopAppBar({Key? key}) : super(key: key);
+  final bool showBackButton;
+  final String pushRoute;
+  const GeneralTopAppBar({
+    Key? key,
+    this.showBackButton = false,
+    this.pushRoute = '',
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,6 +17,17 @@ class GeneralTopAppBar extends StatelessWidget with PreferredSizeWidget {
       elevation: 10,
       flexibleSpace: Image.asset('assets/images/logo.png'),
       backgroundColor: backgroundColor,
+      leading: showBackButton
+          ? IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    pushRoute, (Route<dynamic> route) => false);
+              },
+              icon: const Icon(
+                Icons.arrow_back_ios,
+                color: Colors.white,
+              ))
+          : null,
     );
   }
 

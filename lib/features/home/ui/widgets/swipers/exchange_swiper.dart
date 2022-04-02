@@ -20,15 +20,15 @@ class ExchangeSwiper extends StatelessWidget {
       child: SizedBox(
         height: DEVICE_SCREEN_HEIGHT * 0.2,
         child: PageView.builder(
-            pageSnapping: false,
+          pageSnapping: false,
+          physics: const BouncingScrollPhysics(),
+          controller: PageController(initialPage: 1, viewportFraction: 0.3),
+          itemCount: exchangeList.length,
+          itemBuilder: (context, index) => SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
-            controller: PageController(initialPage: 1, viewportFraction: 0.3),
-            itemCount: exchangeList.length,
-            itemBuilder: (context, index) => Column(
-                  children: [
-                    ExchangeCard(exchange: exchangeList.elementAt(index)),
-                  ],
-                )),
+            child: ExchangeCard(exchange: exchangeList.elementAt(index)),
+          ),
+        ),
       ),
     );
   }

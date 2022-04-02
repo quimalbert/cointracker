@@ -1,11 +1,23 @@
+import 'dart:convert';
+
+import 'package:cointracker/features/portfolio/ui/portfolio_coin_add_page.dart';
+import 'package:cointracker/features/portfolio/ui/qr_scanner.dart';
+import 'package:cointracker/features/portfolio/ui/widgets/portfolio_chart.dart';
+import 'package:cointracker/features/portfolio/ui/widgets/portfolio_coin_card.dart';
 import 'package:cointracker/shared/domain/coin.dart';
 import 'package:cointracker/shared/infrastructure/data_sources/coin_list_remote_data_source.dart';
 import 'package:cointracker/shared/ui/styles.dart';
 import 'package:cointracker/shared/ui/widgets/custom_circular_progress_indicator.dart';
+import 'package:cointracker/shared/ui/widgets/scaffold_snackbar.dart';
+import 'package:cointracker/shared/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+import '../../../shared/application/read_user_data.dart';
 import '../../../shared/domain/database.dart';
+import '../domain/char_data.dart';
 
 class PortfolioContent extends StatefulWidget {
   const PortfolioContent({Key? key}) : super(key: key);
@@ -19,11 +31,13 @@ class _PortfolioContentState extends State<PortfolioContent> {
 
   bool _isLoading = true;
 
-  Map<String, dynamic> _portfolioMap = {};
-  List<Coin> _coinList = [];
-  List<Coin> _portfolioCoinList = [];
+  late Map<String, dynamic> _portfolioMap;
+  late List<Coin> _coinList;
+  late List<Coin> _portfolioCoinList;
 
-  List<ChartData> _chartData = [];
+  late List<ChartData> _chartData;
+
+  late String _email;
 
   late TooltipBehavior _tooltip;
 
@@ -34,36 +48,35 @@ class _PortfolioContentState extends State<PortfolioContent> {
     Colors.orangeAccent,
     Colors.deepPurpleAccent,
     Colors.yellowAccent,
-    Colors.white,
   ];
-  late bool _test;
+
+  late double _portfolioTotalValue;
+
+  final NumberFormat _formatCurrency = NumberFormat.compactSimpleCurrency();
+
   @override
   void initState() {
-    _initState();
-
     super.initState();
+
+    _initState();
   }
 
   void _initState() {
     setState(() => _isLoading = true);
 
+    _portfolioTotalValue = 0;
+    _portfolioMap = {};
+    _coinList = [];
+    _portfolioCoinList = [];
+    _chartData = [];
+
     DatabaseService().getUserPortfolio().then((value) {
       _portfolioMap = value;
 
-      DateTime now = new DateTime.now();
-      Map<String, Map<String, dynamic>> _coinMap = {
-        "btc": {
-          "buyDate": now,
-          "buyPrice": 100,
-          "quantity": 1,
-        },
-        "eth": {
-          "buyDate": now,
-          "buyPrice": 100,
-          "quantity": 1,
-        },
-      };
-      DatabaseService().addCoinToPortfolio(_coinMap);
+      ReadUserDataUseCase().call().then((value) {
+        _email = value['email'];
+      });
+
       CoinListRemoteDataSource().getCoinList().then((value) {
         _coinList = value;
 
@@ -74,6 +87,8 @@ class _PortfolioContentState extends State<PortfolioContent> {
                 element.symbol == coinEntry.key.toString().toUpperCase());
 
             _portfolioCoinList.add(_coin);
+
+            _portfolioTotalValue += coinEntry.value['quantity'] * _coin.price;
 
             _chartData.add(
               ChartData(
@@ -109,14 +124,63 @@ class _PortfolioContentState extends State<PortfolioContent> {
     }
 
     if (_portfolioCoinList.isEmpty) {
-      return RefreshIndicator(
-        onRefresh: _refresh,
-        child: const SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Center(
-            child: Text('Your Portfolio is empty!'),
+      return Column(
+        children: [
+          SizedBox(height: DEVICE_SCREEN_HEIGHT * 0.02),
+          const Text(
+            'Your Portfolio is empty!',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: backgroundColor,
+              fontSize: 20,
+            ),
           ),
-        ),
+          SizedBox(height: DEVICE_SCREEN_HEIGHT * 0.25),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'You could start adding new coins...',
+                style: TextStyle(fontSize: 16),
+              ),
+              IconButton(
+                tooltip: 'Add new Coin',
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    PortfolioCoinAddPage.routeID,
+                    arguments: _coinList,
+                  );
+                },
+                icon: const Icon(
+                  Icons.add,
+                  size: 32,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'or scan another Portfolio!',
+                style: TextStyle(fontSize: 16),
+              ),
+              IconButton(
+                tooltip: 'Scan a Portfolio QR',
+                icon: const Icon(
+                  Icons.qr_code_scanner,
+                  size: 32,
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, QRScanner.routeID);
+                },
+                color: backgroundColor,
+              ),
+            ],
+          ),
+        ],
       );
     }
 
@@ -127,25 +191,52 @@ class _PortfolioContentState extends State<PortfolioContent> {
         physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
-            SfCircularChart(
-              tooltipBehavior: _tooltip,
-              series: <CircularSeries>[
-                DoughnutSeries<ChartData, String>(
-                  enableTooltip: true,
-                  explode: true,
-                  dataSource: _chartData,
-                  pointColorMapper: (ChartData data, _) => data.color,
-                  xValueMapper: (ChartData data, _) => data.coinName,
-                  yValueMapper: (ChartData data, _) =>
-                      double.parse(data.value.toStringAsFixed(2)),
+            SizedBox(height: DEVICE_SCREEN_HEIGHT * 0.02),
+            Text(
+              'Your portfolio total value: ' +
+                  _formatCurrency.format(_portfolioTotalValue),
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: backgroundColor,
+                fontSize: 20,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  tooltip: 'Show your Portfolio QR',
+                  icon: const Icon(
+                    Icons.qr_code,
+                    size: 32,
+                  ),
+                  onPressed: () {
+                    WidgetsBinding.instance?.addPostFrameCallback((_) {
+                      showQRDialog(context);
+                    });
+                  },
+                  color: backgroundColor,
+                ),
+                IconButton(
+                  tooltip: 'Scan a Portfolio QR',
+                  icon: const Icon(
+                    Icons.qr_code_scanner,
+                    size: 32,
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, QRScanner.routeID);
+                  },
+                  color: backgroundColor,
                 ),
               ],
             ),
+            PortfolioChart(tooltipBehavior: _tooltip, chartData: _chartData),
             const Text(
               'Your assets',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
+                color: backgroundColor,
               ),
             ),
             SizedBox(height: DEVICE_SCREEN_HEIGHT * 0.01),
@@ -154,33 +245,19 @@ class _PortfolioContentState extends State<PortfolioContent> {
               shrinkWrap: true,
               itemCount: _portfolioCoinList.length,
               itemBuilder: (context, index) {
-                return Column(
-                  children: [
-                    SizedBox(height: DEVICE_SCREEN_HEIGHT * 0.02),
-                    Text(
+                return PortfolioCoinCard(
+                  quantity: double.parse(_portfolioMap.entries
+                      .elementAt(index)
+                      .value['quantity']
+                      .toString()),
+                  coin: _portfolioCoinList.elementAt(index),
+                  onDeleteButtonTapped: () {
+                    showDeleteAlertDialog(
+                      context,
                       _portfolioCoinList.elementAt(index).name,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: _colorList[index],
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(_portfolioMap.entries
-                            .elementAt(index)
-                            .value['quantity']
-                            .toString() +
-                        ' ' +
-                        _portfolioMap.entries
-                            .elementAt(index)
-                            .key
-                            .toUpperCase()),
-                    Text('\$' +
-                        (_portfolioMap.entries
-                                    .elementAt(index)
-                                    .value['quantity'] *
-                                _coinList.elementAt(index).price)
-                            .toString()),
-                  ],
+                      index,
+                    );
+                  },
                 );
               },
             ),
@@ -190,16 +267,71 @@ class _PortfolioContentState extends State<PortfolioContent> {
       ),
     );
   }
-}
 
-class ChartData {
-  final String coinName;
-  final double value;
-  final Color color;
+  showDeleteAlertDialog(BuildContext context, String coinName, int index) {
+    Widget yesButton = TextButton(
+      child: const Text(
+        'Yes',
+        style: TextStyle(color: Colors.green),
+      ),
+      onPressed: () async {
+        _portfolioMap.removeWhere(
+            (key, value) => key == _portfolioMap.entries.elementAt(index).key);
 
-  ChartData({
-    required this.coinName,
-    required this.value,
-    required this.color,
-  });
+        await DatabaseService().setPortfolio(_portfolioMap);
+
+        Navigator.pop(context);
+
+        scaffoldSnackBar(
+            context: context,
+            text: coinName + ' deleted from your Portfolio',
+            isError: false);
+
+        _initState();
+      },
+    );
+
+    Widget noButton = TextButton(
+      child: const Text(
+        'No',
+        style: TextStyle(color: Colors.redAccent),
+      ),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // Create AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text('Delete ' + coinName),
+      content: Text('Are you sure you want to delete ' +
+          coinName +
+          ' from your Portfolio?'),
+      actions: [noButton, yesButton],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  showQRDialog(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      content: QrImage(
+        data: jsonEncode([_email, _portfolioMap]),
+        version: QrVersions.auto,
+      ),
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 }

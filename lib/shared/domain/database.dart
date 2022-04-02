@@ -6,8 +6,9 @@ class DatabaseService {
   final CollectionReference brewsCollection =
       FirebaseFirestore.instance.collection('portfolio');
 
-  Future<void> addCoinToPortfolio(
-      Map<String, Map<String, dynamic>> _coinMap) async {
+  Future<void> setPortfolio(
+    Map<String, dynamic> _coinMap,
+  ) async {
     Map<String, dynamic> _userMap = {};
     _userMap = await ReadUserDataUseCase().call();
     String _email = _userMap['email'];

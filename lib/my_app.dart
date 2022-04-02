@@ -2,8 +2,11 @@ import 'package:cointracker/features/coin_detail/ui/coin_detail_page.dart';
 import 'package:cointracker/features/coin_list/ui/coin_list_page.dart';
 import 'package:cointracker/features/exchange_detail/exchange_detail_page.dart';
 import 'package:cointracker/features/login/ui/login_page.dart';
+import 'package:cointracker/features/portfolio/ui/portfolio_coin_add_page.dart';
 import 'package:cointracker/features/portfolio/ui/portfolio_page.dart';
+import 'package:cointracker/features/portfolio/ui/qr_scanner.dart';
 import 'package:cointracker/features/profile/ui/profile_page.dart';
+import 'package:cointracker/features/scanned_portfolio/scanned_portfolio_page.dart';
 import 'package:cointracker/shared/ui/widgets/custom_circular_progress_indicator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -53,6 +56,9 @@ class _MyAppState extends State<MyApp> {
         ProfilePage.routeID: (context) => const ProfilePage(),
         CoinDetailPage.routeID: (context) => const CoinDetailPage(),
         ExchangeDetailPage.routeID: (context) => const ExchangeDetailPage(),
+        QRScanner.routeID: (context) => const QRScanner(),
+        ScannedPortfolioPage.routeID: (context) => const ScannedPortfolioPage(),
+        PortfolioCoinAddPage.routeID: (context) => const PortfolioCoinAddPage(),
       },
     );
   }

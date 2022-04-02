@@ -11,7 +11,6 @@ import 'package:cointracker/shared/ui/widgets/scaffold_snackbar.dart';
 import 'package:cointracker/shared/utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../../shared/application/read_user_data.dart';
 import '../../../shared/application/write_user_data.dart';
@@ -199,13 +198,6 @@ class _ProfileContentState extends State<ProfileContent> {
                 color: Colors.black,
               ),
             ),
-          ),
-        ),
-        Center(
-          child: QrImage(
-            data: _userMap["email"],
-            version: QrVersions.auto,
-            size: 150.0,
           ),
         ),
       ],

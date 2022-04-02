@@ -20,7 +20,8 @@ class CoinCard extends StatelessWidget {
           Navigator.pushNamed(context, CoinDetailPage.routeID, arguments: coin),
       child: Card(
         elevation: 10,
-        child: Column(
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
           children: [
             Container(
                 height: 100,
