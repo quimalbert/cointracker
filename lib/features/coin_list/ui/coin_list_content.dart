@@ -41,6 +41,7 @@ class _CoinListContentState extends State<CoinListContent> {
     }
 
     return RefreshIndicator(
+      color: Colors.red,
       onRefresh: _refresh,
       child: ListView.builder(
           physics: const BouncingScrollPhysics(),
