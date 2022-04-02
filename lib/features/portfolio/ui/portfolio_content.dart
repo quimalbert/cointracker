@@ -42,12 +42,16 @@ class _PortfolioContentState extends State<PortfolioContent> {
   late TooltipBehavior _tooltip;
 
   final List<Color> _colorList = [
-    Colors.blueAccent,
-    Colors.green,
-    Colors.redAccent,
     Colors.orangeAccent,
-    Colors.deepPurpleAccent,
-    Colors.yellowAccent,
+    Colors.yellow,
+    Colors.greenAccent,
+    Colors.green,
+    Colors.blueAccent,
+    Colors.blue,
+    Colors.purple,
+    Colors.purpleAccent,
+    Colors.pink,
+    Colors.redAccent,
   ];
 
   late double _portfolioTotalValue;
@@ -98,10 +102,11 @@ class _PortfolioContentState extends State<PortfolioContent> {
               ),
             );
 
-            if (_index < _colorList.length)
+            if (_index < _colorList.length - 1) {
               _index++;
-            else
+            } else {
               _index = 0;
+            }
           }
 
           _tooltip =
