@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../shared/utils/constants.dart';
+
 class ProfileCard extends StatelessWidget {
   final String buttonText;
   final onPressed;
@@ -15,9 +17,9 @@ class ProfileCard extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        margin: const EdgeInsets.all(5),
-        elevation: 8,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        color: backgroundColor,
+        margin: const EdgeInsets.all(10),
         child: Column(
           children: <Widget>[
             ListTile(
@@ -25,6 +27,7 @@ class ProfileCard extends StatelessWidget {
               title: Text(
                 buttonText,
                 textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.white),
               ),
               //leading: Icon(Icons.admin_panel_settings_sharp),
             ),

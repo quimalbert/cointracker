@@ -40,7 +40,9 @@ class _ExchangeDetailContentState extends State<ExchangeDetailContent> {
     if (_isLoading)
       return SafeArea(
           child: Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(
+          backgroundColor: Colors.white,
+        ),
       ));
 
     return SafeArea(

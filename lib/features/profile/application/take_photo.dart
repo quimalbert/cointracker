@@ -1,12 +1,10 @@
-import 'dart:io';
-
 import '../infrastructure/photo_local_data_source.dart';
 
 class TakePhotoUseCase {
   final PhotoRemoteDataSource _photoRemoteDataSource =
       _getPhotoRemoteDataSource();
 
-  Future<File> call() async {
+  Future<String?> call() async {
     try {
       return await _photoRemoteDataSource.takePhoto();
     } catch (e) {

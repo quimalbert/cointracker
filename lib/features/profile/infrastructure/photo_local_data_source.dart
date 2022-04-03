@@ -1,61 +1,51 @@
 import 'dart:io';
 
-import 'package:cloudinary_public/cloudinary_public.dart';
+import 'package:cloudinary_sdk/cloudinary_sdk.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PhotoRemoteDataSource {
-  static const CLOUDINARY_URL =
-      'cloudinary://235117647476446:0vyTICgQX0H5wFTT706Og4XQhWY@atlantis-it';
-  final cloudinary =
-      CloudinaryPublic(CLOUDINARY_URL, 'UPLOAD_PRESET', cache: false);
-
   //String hola = "https://api.cloudinary.com/v1_1/atlantis-it/auto/upload";
-  Future<dynamic> _uploadPhoto(File? image, bool isTake) async {
-    if (isTake)
-      var image = await ImagePicker().pickImage(source: ImageSource.camera);
+  Future<String?> _uploadPhoto(File? image) async {
+    final cloudinary = Cloudinary(
+        "235117647476446", "0vyTICgQX0H5wFTT706Og4XQhWY", "atlantis-it");
 
-    //xºcloudinary.client
     try {
-      CloudinaryResponse response = await cloudinary.uploadFile(
-        CloudinaryFile.fromFile(image!.path,
-            resourceType: CloudinaryResourceType.Image),
-      );
-
+      final response = await cloudinary.uploadFile(
+          filePath: image?.path,
+          resourceType: CloudinaryResourceType.image,
+          folder: "CoinTracker");
       print(response.secureUrl);
-    } on CloudinaryException catch (e) {
-      print(e.message);
-      print(e.request);
-    }
+    } catch (e) {}
   }
 
-  Future<File> selectPhoto() async {
+  Future<String?> selectPhoto() async {
     try {
-      /*final XFile? xFile =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
-      final File imageTemporally = File(xFile!.path);
-
-      //_uploadPhoto(imageTemporally, false);
-      //pujas al server
-      //string
-      Image.file(imageTemporally);*/
-
       PickedFile? pickedFile = await ImagePicker().getImage(
         source: ImageSource.gallery,
         maxWidth: 250,
         maxHeight: 250,
       );
-      return File(pickedFile!.path);
-    } catch (e) {
-      rethrow;
-    }
+
+      final cloudinary = Cloudinary(
+          "235117647476446", "0vyTICgQX0H5wFTT706Og4XQhWY", "atlantis-it");
+
+      final response = await cloudinary.uploadFile(
+          filePath: pickedFile?.path,
+          resourceType: CloudinaryResourceType.image,
+          folder: "CoinTracker");
+      print(response.secureUrl);
+      return response.secureUrl;
+    } catch (e) {}
+    return '';
   }
 
-  Future<File> takePhoto() async {
+  Future<String?> takePhoto() async {
     try {
       var image = await ImagePicker().pickImage(source: ImageSource.camera);
-      return File(image!.path);
+      String? image_url = await _uploadPhoto(File(image!.path));
+      return image_url;
     } catch (e) {
-      return File('');
+      return '';
     }
   }
 }

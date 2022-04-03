@@ -2,6 +2,7 @@ import 'package:cointracker/features/home/ui/home_page.dart';
 import 'package:cointracker/features/login/application/check_credentials.dart';
 import 'package:cointracker/features/login/infrastructure/biometric_login_local_data_source.dart';
 import 'package:cointracker/features/login/ui/widgets/login_textfield.dart';
+import 'package:cointracker/features/login/ui/widgets/password_textfield.dart';
 import 'package:cointracker/features/login/ui/widgets/reset_password.dart';
 import 'package:cointracker/shared/application/read_user_data.dart';
 import 'package:cointracker/shared/ui/styles.dart';
@@ -60,10 +61,12 @@ class _LoginContentState extends State<LoginContent> {
         LoginTextField(
           hintText: 'Email',
           onChanged: (String value) => _email = value,
+          isPassword: false,
         ),
-        LoginTextField(
+        PasswordTextField(
           hintText: 'Password',
           onChanged: (String value) => _password = value,
+          isPassword: true,
         ),
         SizedBox(height: DEVICE_SCREEN_HEIGHT * 0.05),
         Padding(
@@ -86,17 +89,14 @@ class _LoginContentState extends State<LoginContent> {
               }
               _isLoginCorrect = await _checkCredentialsUseCase(
                   email: _email, password: _password);
-
-              //todo no fa res
-              UserCredential userCredential = await FirebaseAuth.instance
-                  .signInWithEmailAndPassword(
-                      email: _email, password: _password);
-
-              if (userCredential != null) {
+              try {
+                UserCredential userCredential = await FirebaseAuth.instance
+                    .signInWithEmailAndPassword(
+                        email: _email, password: _password);
                 WriteUserDataUseCase().call(
                     email: _email, pictureURL: '', isBiometricEnabled: false);
                 Navigator.pushReplacementNamed(context, HomePage.routeID);
-              } else {
+              } catch (e) {
                 scaffoldSnackBar(
                   context: context,
                   text: 'Wrong credentials',

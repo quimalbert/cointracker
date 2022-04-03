@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class LoginTextField extends StatelessWidget {
+class PasswordTextField extends StatefulWidget {
   final String hintText;
   final Function onChanged;
   final bool isPassword;
-  const LoginTextField(
+  const PasswordTextField(
       {Key? key,
       required this.hintText,
       required this.onChanged,
@@ -12,11 +12,17 @@ class LoginTextField extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<PasswordTextField> createState() => _PasswordTextFieldState();
+}
+
+class _PasswordTextFieldState extends State<PasswordTextField> {
+  @override
   Widget build(BuildContext context) {
+    bool _isObscure = true;
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: TextFormField(
-        onChanged: (String value) => onChanged(value),
+      child: TextField(
+        onChanged: (String value) => widget.onChanged(value),
         style: const TextStyle(color: Colors.white),
         decoration: InputDecoration(
           focusedBorder: const OutlineInputBorder(
@@ -25,9 +31,20 @@ class LoginTextField extends StatelessWidget {
           enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.red, width: 1.0),
           ),
-          hintText: hintText,
+          hintText: widget.hintText,
           hintStyle: const TextStyle(color: Colors.white),
+          suffixIcon: IconButton(
+              icon: Icon(
+                _isObscure! ? Icons.visibility : Icons.visibility_off,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                setState(() {
+                  _isObscure = !_isObscure;
+                });
+              }),
         ),
+        obscureText: _isObscure,
       ),
     );
   }

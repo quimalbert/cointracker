@@ -340,10 +340,14 @@ class _PortfolioContentState extends State<PortfolioContent> {
 
   showQRDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
-      content: QrImage(
-        data: jsonEncode([_email, _portfolioMap]),
-        version: QrVersions.auto,
-        size: 250,
+      content: Container(
+        width: 500,
+        height: 500,
+        child: QrImage(
+          data: jsonEncode([_email, _portfolioMap]),
+          version: QrVersions.auto,
+          size: 250,
+        ),
       ),
     );
 

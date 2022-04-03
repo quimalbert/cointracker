@@ -13,7 +13,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/application/read_user_data.dart';
-import '../../../shared/application/write_user_data.dart';
 import '../application/take_photo.dart';
 
 class ProfileContent extends StatefulWidget {
@@ -26,7 +25,7 @@ class ProfileContent extends StatefulWidget {
 class _ProfileContentState extends State<ProfileContent> {
   late String _textMessage, _titleMessage;
 
-  File? imgUrl;
+  String? imgUrl;
   late Map<String, dynamic> _userMap;
 
   final SelectPhotoUseCase _selectPhotoUseCase = _getSelectPhotoUseCase();
@@ -124,7 +123,7 @@ class _ProfileContentState extends State<ProfileContent> {
               child: CircleAvatar(
                 backgroundImage: _userMap["profile_picture_url"] == null
                     ? Image.asset('assets/images/default_profile.png').image
-                    : FileImage(File(_userMap["profile_picture_url"]!)),
+                    : FileImage(File(imgUrl!)),
                 radius: 75,
                 backgroundColor: Colors.red,
               ),
@@ -171,18 +170,10 @@ class _ProfileContentState extends State<ProfileContent> {
                       textMessage: _textMessage,
                       titleText: _titleMessage,
                     ));
-            WriteUserDataUseCase().call(
-                email: _userMap["email"],
-                pictureURL: _userMap["pictureURL"],
-                isBiometricEnabled: _isBiometricEnabled);
           },
         ),
-        ProfileCard(
-          buttonText: 'Dark Mode',
-          onPressed: () {},
-        ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(30.0),
           child: GestureDetector(
             onTap: () {
               FirebaseAuth.instance.signOut();

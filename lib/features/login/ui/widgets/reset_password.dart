@@ -47,6 +47,7 @@ class _ResetPassPageState extends State<ResetPassPage> {
               ),
             ),
             LoginTextField(
+              isPassword: false,
               hintText: "Introduce your email",
               onChanged: (String value) {
                 _resetEmailInput = value;
