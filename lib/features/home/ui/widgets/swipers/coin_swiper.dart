@@ -16,7 +16,7 @@ class CoinSwiper extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
-        height: DEVICE_SCREEN_HEIGHT * 0.2,
+        height: DEVICE_SCREEN_HEIGHT * 0.215,
         child: PageView.builder(
           pageSnapping: false,
           physics: const BouncingScrollPhysics(),

@@ -19,13 +19,13 @@ class CoinCard extends StatelessWidget {
       onTap: () =>
           Navigator.pushNamed(context, CoinDetailPage.routeID, arguments: coin),
       child: Card(
-        elevation: 10,
+        elevation: 20,
         child: ListView(
           physics: const BouncingScrollPhysics(),
           children: [
             Container(
-                height: 100,
-                width: 100,
+                height: DEVICE_SCREEN_HEIGHT * 0.125,
+                width: DEVICE_SCREEN_WIDTH * 0.125,
                 padding: const EdgeInsets.all(10.0),
                 margin: const EdgeInsets.all(5.0),
                 decoration: BoxDecoration(
@@ -54,10 +54,10 @@ class CoinCard extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontWeight: FontWeight.bold)),
             Padding(
-              padding: const EdgeInsets.only(top: 5),
-              child: Text('\$${coin.price.toStringAsFixed(3)}'),
+              padding: const EdgeInsets.all(5.0),
+              child: Text('\$${coin.price.toStringAsFixed(3)}',
+                textAlign: TextAlign.center),
             ),
-            const SizedBox(height: 5.0),
           ],
         ),
       ),

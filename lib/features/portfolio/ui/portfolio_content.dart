@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:cointracker/features/portfolio/ui/portfolio_coin_add_page.dart';
 import 'package:cointracker/features/portfolio/ui/qr_scanner.dart';
 import 'package:cointracker/features/portfolio/ui/widgets/portfolio_chart.dart';
@@ -14,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-
 import '../../../shared/application/read_user_data.dart';
 import '../../../shared/domain/database.dart';
 import '../domain/char_data.dart';
