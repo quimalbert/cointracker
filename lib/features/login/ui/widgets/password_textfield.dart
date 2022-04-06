@@ -16,9 +16,9 @@ class PasswordTextField extends StatefulWidget {
 }
 
 class _PasswordTextFieldState extends State<PasswordTextField> {
+  bool _isObscure = true;
   @override
   Widget build(BuildContext context) {
-    bool _isObscure = true;
     return Padding(
       padding: const EdgeInsets.all(10),
       child: TextField(
@@ -35,7 +35,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
           hintStyle: const TextStyle(color: Colors.white),
           suffixIcon: IconButton(
               icon: Icon(
-                _isObscure! ? Icons.visibility : Icons.visibility_off,
+                _isObscure ? Icons.visibility : Icons.visibility_off,
                 color: Colors.white,
               ),
               onPressed: () {

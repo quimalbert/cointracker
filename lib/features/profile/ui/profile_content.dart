@@ -75,29 +75,32 @@ class _ProfileContentState extends State<ProfileContent> {
                       child: ListView(
                         physics: const BouncingScrollPhysics(),
                         children: [
-                          AvatarButton(
-                            buttonText: "Select from Gallery",
-                            buttonIcon: const Icon(
-                              Icons.photo,
-                              color: Colors.white,
-                              size: 50.0,
-                            ),
-                            onPressed: () {
-                              print('0');
-                              try {
-                                _selectPhotoUseCase().then((value) {
-                                  setState(() {
-                                    imgUrl = value;
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(250),
+                            child: AvatarButton(
+                              buttonText: "Select from Gallery",
+                              buttonIcon: const Icon(
+                                Icons.photo,
+                                color: Colors.white,
+                                size: 50.0,
+                              ),
+                              onPressed: () {
+                                print('0');
+                                try {
+                                  _selectPhotoUseCase().then((value) {
+                                    setState(() {
+                                      imgUrl = value;
+                                    });
                                   });
-                                });
-                              } catch (e) {
-                                scaffoldSnackBar(
-                                  context: context,
-                                  text: 'error',
-                                  isError: true,
-                                );
-                              }
-                            },
+                                } catch (e) {
+                                  scaffoldSnackBar(
+                                    context: context,
+                                    text: 'error',
+                                    isError: true,
+                                  );
+                                }
+                              },
+                            ),
                           ),
                           AvatarButton(
                             buttonText: "Take a beautiful Photo",
